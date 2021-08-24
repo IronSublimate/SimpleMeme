@@ -50,7 +50,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:background="#fafafa">
-                <com.ihewro.android_expression_package.view.AvatarImageView
+                <com.ironsublimate.mememanager.view.AvatarImageView
                     android:id="@+id/owner_avatar"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"

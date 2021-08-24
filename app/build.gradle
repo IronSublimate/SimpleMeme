@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.ihewro.android_expression_package"
+        applicationId "com.ironsublimate.mememanaager"
         minSdkVersion 24
         targetSdkVersion 26
         versionCode 201808281

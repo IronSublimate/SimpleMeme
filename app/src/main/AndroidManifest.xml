@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ihewro.android_expression_package">
+    package="com.ironsublimate.mememanager">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,21 +10,21 @@
 
 
     <application
-        android:name=".MyApplication"
+        android:name="com.ironsublimate.mememanager.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name="com.ironsublimate.mememanager.activity.MainActivity"></activity>
         <activity
-            android:name=".activity.BaseActivity"
+            android:name="com.ironsublimate.mememanager.activity.BaseActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme" />
 
         <service
-            android:name=".QuickService"
+            android:name="com.ironsublimate.mememanager.QuickService"
             android:enabled="true"
             android:exported="true"
             android:icon="@drawable/logo"
@@ -37,7 +37,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.ihewro.android_expression_package.fileprovider"
+            android:authorities="ironsublimate.mememanager.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -45,10 +45,10 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".activity.ShopActivity" />
-        <activity android:name=".activity.MyActivity" />
-        <activity android:name=".activity.ExpWebFolderDetailActivity" />
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name="com.ironsublimate.mememanager.activity.ShopActivity" />
+        <activity android:name="com.ironsublimate.mememanager.activity.MyActivity" />
+        <activity android:name="com.ironsublimate.mememanager.activity.ExpWebFolderDetailActivity" />
+        <activity android:name="com.ironsublimate.mememanager.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
@@ -56,13 +56,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ExpLocalFolderDetailActivity" />
-        <activity android:name=".activity.AboutActivity" />
+        <activity android:name="com.ironsublimate.mememanager.activity.ExpLocalFolderDetailActivity" />
+        <activity android:name="com.ironsublimate.mememanager.activity.AboutActivity" />
         <activity
-            android:name=".activity.ErrorActivity"
+            android:name="com.ironsublimate.mememanager.activity.ErrorActivity"
             android:label="抱歉，出错了"
             android:process=":error_activity" />
-        <activity android:name=".activity.ResultActivity"></activity>
+        <activity android:name="com.ironsublimate.mememanager.activity.ResultActivity"></activity>
     </application>
 
 </manifest>

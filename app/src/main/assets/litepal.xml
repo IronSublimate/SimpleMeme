@@ -32,11 +32,11 @@
     	</list>
     -->
     <list>
-        <mapping class="com.ihewro.android_expression_package.bean.ExpressionFolder"/>
-        <mapping class="com.ihewro.android_expression_package.bean.Expression" />
-        <mapping class="com.ihewro.android_expression_package.bean.OneDetailList" />
-        <mapping class="com.ihewro.android_expression_package.bean.OneDetail" />
-        <mapping class="com.ihewro.android_expression_package.bean.UserPreference" />
+        <mapping class="com.ironsublimate.mememanager.bean.ExpressionFolder"/>
+        <mapping class="com.ironsublimate.mememanager.bean.Expression" />
+        <mapping class="com.ironsublimate.mememanager.bean.OneDetailList" />
+        <mapping class="com.ironsublimate.mememanager.bean.OneDetail" />
+        <mapping class="com.ironsublimate.mememanager.bean.UserPreference" />
     </list>
 
     <!--
