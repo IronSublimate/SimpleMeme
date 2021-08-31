@@ -1,8 +1,10 @@
 package com.ironsublimate.simplememe.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ironsublimate.simplememe.util.FileUtil;
 
 import org.litepal.LitePal;
+import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 /**
@@ -16,7 +18,7 @@ import org.litepal.crud.LitePalSupport;
  * </pre>
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Expression extends LitePalSupport{
+public class Expression extends LitePalSupport {
 
     private int id;//主键
     private int status;//标志位，图片来源：~~-1 apk内置图片~~ 1 数据库图片 2 网络图片 3 本机图片（数据库中没有存，头图分享卡片就是这种类型）
@@ -25,13 +27,12 @@ public class Expression extends LitePalSupport{
     private String folderName;//目录的名称
     private String description;//图片描述
     private int desStatus;//是否有图片描述，1为有，0为无
-    private byte[] image;//图片内容，二进制存储
+    @Column(ignore = true)
+    private byte[] image = null;//图片内容，二进制存储
 
 
     public Expression() {
     }
-
-
 
 
     //构造方法里面增加了ExpressionFolder，避免某些情况，无法自动关联外键的情况，快被这个外键折腾疯了
@@ -42,7 +43,7 @@ public class Expression extends LitePalSupport{
         this.folderName = folderName;
     }
 
-    public Expression(int status, String name, String url, String folderName,byte[] image) {
+    public Expression(int status, String name, String url, String folderName, byte[] image) {
         this.status = status;
         this.name = name;
         this.url = url;
@@ -109,11 +110,14 @@ public class Expression extends LitePalSupport{
     }
 
     public byte[] getImage() {
+        if (this.image == null || this.image.length == 0) {
+            this.image = FileUtil.fileToBytes(this.url);
+        }
         return image;
     }
 
     public byte[] getImage(boolean is) {
-        LitePal.find(Expression.class,this.id).getImage();
+        LitePal.find(Expression.class, this.id).getImage();
         return image;
     }
 

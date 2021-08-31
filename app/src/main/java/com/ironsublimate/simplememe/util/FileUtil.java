@@ -121,27 +121,27 @@ public class FileUtil {
     }
 
     public static boolean bytesSavedToFile(byte[]bytes, File targetFile){
-        if (!targetFile.getParentFile().exists()){
-            targetFile.getParentFile().mkdir();
-        }
-        OutputStream output = null;
-
-        try {
-            // 如果文件存在则删除
-            if (targetFile.exists()) {
-                targetFile.delete();
-            }
-            // 在文件系统中根据路径创建一个新的空文件
-            targetFile.createNewFile();
-            output = new FileOutputStream(targetFile);
-            BufferedOutputStream bufferedOutput = new BufferedOutputStream(output);
-            bufferedOutput.write(bytes);
-            // 刷出缓冲输出流，该步很关键，要是不执行flush()方法，那么文件的内容是空的。
-            bufferedOutput.flush();
-            output.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        if (!targetFile.getParentFile().exists()){
+//            targetFile.getParentFile().mkdir();
+//        }
+//        OutputStream output = null;
+//
+//        try {
+//            // 如果文件存在则删除
+//            if (targetFile.exists()) {
+//                targetFile.delete();
+//            }
+//            // 在文件系统中根据路径创建一个新的空文件
+//            targetFile.createNewFile();
+//            output = new FileOutputStream(targetFile);
+//            BufferedOutputStream bufferedOutput = new BufferedOutputStream(output);
+//            bufferedOutput.write(bytes);
+//            // 刷出缓冲输出流，该步很关键，要是不执行flush()方法，那么文件的内容是空的。
+//            bufferedOutput.flush();
+//            output.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return true;
     }
@@ -160,44 +160,45 @@ public class FileUtil {
     }
 
     public static boolean copyFileToTarget(File source,File target){
-        if (Objects.equals(source.getAbsolutePath(), target.getAbsolutePath())){
-            return true;
-        }else {
-            File fileParent = target.getParentFile();//如果表情包目录都不存在，则需要先创建目录
-            if(!fileParent.exists()){
-                fileParent.mkdirs();
-                File fileTwoParent = fileParent.getParentFile();
-                if (!fileTwoParent.exists()){
-                    fileTwoParent.mkdir();
-                }
-            }
-            FileInputStream fileInputStream = null;
-            FileOutputStream fileOutputStream = null;
-            try {
-                fileInputStream = new FileInputStream(source);
-                fileOutputStream = new FileOutputStream(target);
-                byte[] buffer = new byte[1024];
-                while (fileInputStream.read(buffer) > 0) {
-                    fileOutputStream.write(buffer);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            } finally {
-                try {
-                    if (fileInputStream != null) {
-                        fileInputStream.close();
-                    }
-                    if (fileOutputStream != null) {
-                        fileOutputStream.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-            return true;
-        }
+        return true;
+//        if (Objects.equals(source.getAbsolutePath(), target.getAbsolutePath())){
+//            return true;
+//        }else {
+//            File fileParent = target.getParentFile();//如果表情包目录都不存在，则需要先创建目录
+//            if(!fileParent.exists()){
+//                fileParent.mkdirs();
+//                File fileTwoParent = fileParent.getParentFile();
+//                if (!fileTwoParent.exists()){
+//                    fileTwoParent.mkdir();
+//                }
+//            }
+//            FileInputStream fileInputStream = null;
+//            FileOutputStream fileOutputStream = null;
+//            try {
+//                fileInputStream = new FileInputStream(source);
+//                fileOutputStream = new FileOutputStream(target);
+//                byte[] buffer = new byte[1024];
+//                while (fileInputStream.read(buffer) > 0) {
+//                    fileOutputStream.write(buffer);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return false;
+//            } finally {
+//                try {
+//                    if (fileInputStream != null) {
+//                        fileInputStream.close();
+//                    }
+//                    if (fileOutputStream != null) {
+//                        fileOutputStream.close();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    return false;
+//                }
+//            }
+//            return true;
+//        }
     }
 
     public static byte[] fileToBytes(String file) {

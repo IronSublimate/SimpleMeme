@@ -73,7 +73,7 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
 //                }
 //            });
             expression.setDesStatus(1);
-            expression.setDescription("123456");
+            expression.setDescription("");
             expression.save();
         }
         return null;

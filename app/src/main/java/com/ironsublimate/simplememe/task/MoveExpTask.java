@@ -41,7 +41,8 @@ public class MoveExpTask extends AsyncTask<Void, Integer, Boolean> {
     private Boolean status;//false 表示移动，true 表示 复制
     private List<ExpressionFolder> expressionFolderList;
     private TaskListener listener;
-    public MoveExpTask(List<Expression> originExpList, List<String> checkList, String folderName, Activity activity, Boolean status,TaskListener listener){
+
+    public MoveExpTask(List<Expression> originExpList, List<String> checkList, String folderName, Activity activity, Boolean status, TaskListener listener) {
         this.activity = activity;
         this.originExpList = originExpList;
         this.checkList = checkList;
@@ -77,15 +78,15 @@ public class MoveExpTask extends AsyncTask<Void, Integer, Boolean> {
         }
 
         //具体操作
-        for (Expression expression: expressionList) {
+        for (Expression expression : expressionList) {
             //复制到
-            if (status){
-                Expression newExp = new Expression(expression.getStatus(),expression.getName(),expression.getUrl(),folderName,expression.getImage());
-                MyDataBase.addExpressionRecord(newExp,expression.getImage());
-            }else {
+            if (status) {
+//                Expression newExp = new Expression(expression.getStatus(), expression.getName(), expression.getUrl(), folderName, expression.getImage());
+                MyDataBase.addExpressionRecord(expression, expression.getImage(), expression.getUrl());
+            } else {
                 //移动到
                 String originFolderName = expression.getFolderName();
-                MyDataBase.moveExpressionRecord(expression,originFolderName,folderName);
+                MyDataBase.moveExpressionRecord(expression, originFolderName, folderName);
             }
         }
         //发送数据库变化通知
@@ -97,14 +98,14 @@ public class MoveExpTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         dialog.dismiss();
-        if (!aBoolean){
-            Toasty.error(activity,"指定目录不存在，非法错误" + folderName).show();
-        }else {
-            Toasty.success(activity,"添加成功").show();
+        if (!aBoolean) {
+            Toasty.error(activity, "指定目录不存在，非法错误" + folderName).show();
+        } else {
+            Toasty.success(activity, "添加成功").show();
         }
 
 
-        if (listener != null){
+        if (listener != null) {
             listener.onFinish(aBoolean);
         }
 
