@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ironsublimate.mememanager">
+    package="com.ironsublimate.simplememe">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+<!--    <uses-permission android:name="android.permission.INTERNET" />-->
+<!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+<!--    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />-->
 
 
     <application
-        android:name="com.ironsublimate.mememanager.MyApplication"
+        android:name="com.ironsublimate.simplememe.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.ironsublimate.mememanager.activity.MainActivity"></activity>
+        <activity android:name="com.ironsublimate.simplememe.activity.MainActivity"></activity>
         <activity
-            android:name="com.ironsublimate.mememanager.activity.BaseActivity"
+            android:name="com.ironsublimate.simplememe.activity.BaseActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme" />
 
         <service
-            android:name="com.ironsublimate.mememanager.QuickService"
+            android:name="com.ironsublimate.simplememe.QuickService"
             android:enabled="true"
             android:exported="true"
             android:icon="@drawable/logo"
@@ -45,10 +45,10 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name="com.ironsublimate.mememanager.activity.ShopActivity" />
-        <activity android:name="com.ironsublimate.mememanager.activity.MyActivity" />
-        <activity android:name="com.ironsublimate.mememanager.activity.ExpWebFolderDetailActivity" />
-        <activity android:name="com.ironsublimate.mememanager.activity.WelcomeActivity">
+        <activity android:name="com.ironsublimate.simplememe.activity.ShopActivity" />
+        <activity android:name="com.ironsublimate.simplememe.activity.MyActivity" />
+        <activity android:name="com.ironsublimate.simplememe.activity.ExpWebFolderDetailActivity" />
+        <activity android:name="com.ironsublimate.simplememe.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
@@ -56,13 +56,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ironsublimate.mememanager.activity.ExpLocalFolderDetailActivity" />
-        <activity android:name="com.ironsublimate.mememanager.activity.AboutActivity" />
+        <activity android:name="com.ironsublimate.simplememe.activity.ExpLocalFolderDetailActivity" />
+        <activity android:name="com.ironsublimate.simplememe.activity.AboutActivity" />
         <activity
-            android:name="com.ironsublimate.mememanager.activity.ErrorActivity"
+            android:name="com.ironsublimate.simplememe.activity.ErrorActivity"
             android:label="抱歉，出错了"
             android:process=":error_activity" />
-        <activity android:name="com.ironsublimate.mememanager.activity.ResultActivity"></activity>
+        <activity android:name="com.ironsublimate.simplememe.activity.ResultActivity"></activity>
     </application>
 
 </manifest>

@@ -32,11 +32,11 @@
     	</list>
     -->
     <list>
-        <mapping class="com.ironsublimate.mememanager.bean.ExpressionFolder"/>
-        <mapping class="com.ironsublimate.mememanager.bean.Expression" />
-        <mapping class="com.ironsublimate.mememanager.bean.OneDetailList" />
-        <mapping class="com.ironsublimate.mememanager.bean.OneDetail" />
-        <mapping class="com.ironsublimate.mememanager.bean.UserPreference" />
+        <mapping class="com.ironsublimate.simplememe.bean.ExpressionFolder"/>
+        <mapping class="com.ironsublimate.simplememe.bean.Expression" />
+        <mapping class="com.ironsublimate.simplememe.bean.OneDetailList" />
+        <mapping class="com.ironsublimate.simplememe.bean.OneDetail" />
+        <mapping class="com.ironsublimate.simplememe.bean.UserPreference" />
     </list>
 
     <!--

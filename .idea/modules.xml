@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MemeManager.iml" filepath="$PROJECT_DIR$/.idea/modules/MemeManager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MemeManager.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MemeManager.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SimpleMeme.iml" filepath="$PROJECT_DIR$/.idea/modules/SimpleMeme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SimpleMeme.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SimpleMeme.app.iml" />
     </modules>
   </component>
 </project>

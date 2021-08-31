@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_item"
-    tools:context="com.ironsublimate.mememanager.activity.MainActivity">
+    tools:context="com.ironsublimate.simplememe.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -37,7 +37,7 @@
                     android:orientation="vertical"
                     android:background="@color/white">
 
-                    <com.ironsublimate.mememanager.view.CustomImageView
+                    <com.ironsublimate.simplememe.view.CustomImageView
                         android:id="@+id/top_image"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="30dp"
