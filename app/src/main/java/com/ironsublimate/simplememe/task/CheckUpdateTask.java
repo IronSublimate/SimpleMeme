@@ -6,35 +6,24 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.ALog;
 import com.ironsublimate.simplememe.GlobalConfig;
 import com.ironsublimate.simplememe.bean.Version;
 //import com.ironsublimate.simplememe.http.HttpUtil;
 //import com.ironsublimate.simplememe.http.WebImageInterface;
-import com.ironsublimate.simplememe.util.APKVersionCodeUtils;
-import com.ironsublimate.simplememe.util.UIUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import es.dmoral.toasty.Toasty;
 import me.jessyan.progressmanager.ProgressListener;
-import me.jessyan.progressmanager.ProgressManager;
 import me.jessyan.progressmanager.body.ProgressInfo;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static java.lang.Thread.sleep;
 

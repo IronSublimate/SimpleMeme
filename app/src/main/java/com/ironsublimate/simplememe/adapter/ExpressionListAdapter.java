@@ -1,6 +1,6 @@
 package com.ironsublimate.simplememe.adapter;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CheckBox;

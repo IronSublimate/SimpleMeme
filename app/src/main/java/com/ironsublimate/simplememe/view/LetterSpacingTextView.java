@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  *     version: 1.0
  * </pre>
  */
-public class LetterSpacingTextView extends android.support.v7.widget.AppCompatTextView {
+public class LetterSpacingTextView extends androidx.appcompat.widget.AppCompatTextView {
 
     private String content;
     private int width;

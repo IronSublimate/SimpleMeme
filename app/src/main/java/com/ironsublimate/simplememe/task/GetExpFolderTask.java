@@ -1,7 +1,7 @@
 package com.ironsublimate.simplememe.task;
 
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.ironsublimate.simplememe.bean.ExpressionFolder;
 import com.ironsublimate.simplememe.callback.GetMainExpListener;

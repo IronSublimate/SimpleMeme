@@ -2,39 +2,22 @@ package com.ironsublimate.simplememe.task;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.ALog;
-import com.ironsublimate.simplememe.GlobalConfig;
-import com.ironsublimate.simplememe.bean.EventMessage;
 import com.ironsublimate.simplememe.bean.Expression;
 import com.ironsublimate.simplememe.bean.ExpressionFolder;
 import com.ironsublimate.simplememe.callback.TaskListener;
 //import com.ironsublimate.simplememe.http.HttpUtil;
 //import com.ironsublimate.simplememe.http.WebImageInterface;
-import com.ironsublimate.simplememe.util.DateUtil;
-import com.ironsublimate.simplememe.util.FileUtil;
-import com.ironsublimate.simplememe.util.UIUtil;
 
-import org.greenrobot.eventbus.EventBus;
-import org.litepal.LitePal;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 import me.jessyan.progressmanager.ProgressListener;
-import me.jessyan.progressmanager.ProgressManager;
 import me.jessyan.progressmanager.body.ProgressInfo;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static java.lang.Thread.sleep;
 

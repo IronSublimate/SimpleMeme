@@ -15,7 +15,7 @@ import android.util.AttributeSet;
  *     version: 1.0
  * </pre>
  */
-public class AvatarImageView extends android.support.v7.widget.AppCompatImageView {
+public class AvatarImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public static float radius = 15.0f;
 

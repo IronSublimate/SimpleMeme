@@ -1,8 +1,8 @@
 package com.ironsublimate.simplememe.adapter;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,10 +16,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ironsublimate.simplememe.R;
 import com.ironsublimate.simplememe.activity.ExpWebFolderDetailActivity;
-import com.ironsublimate.simplememe.bean.Expression;
 import com.ironsublimate.simplememe.bean.ExpressionFolder;
 //import com.ironsublimate.simplememe.http.HttpUtil;
-import com.ironsublimate.simplememe.task.DownloadImageTask;
 import com.ironsublimate.simplememe.util.UIUtil;
 
 import java.util.ArrayList;
@@ -28,9 +26,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * <pre>

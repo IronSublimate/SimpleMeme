@@ -1,6 +1,6 @@
 package com.ironsublimate.simplememe.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.ironsublimate.simplememe.R;

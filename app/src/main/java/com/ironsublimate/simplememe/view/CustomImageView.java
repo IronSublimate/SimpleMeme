@@ -15,7 +15,7 @@ import android.util.AttributeSet;
  *     version: 1.0
  * </pre>
  */
-public class CustomImageView extends android.support.v7.widget.AppCompatImageView {
+public class CustomImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public static float radius = 18.0f;
 

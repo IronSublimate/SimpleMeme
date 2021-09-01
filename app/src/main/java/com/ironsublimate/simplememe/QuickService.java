@@ -3,7 +3,7 @@ package com.ironsublimate.simplememe;
 import android.content.Intent;
 import android.os.Build;
 import android.service.quicksettings.TileService;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import com.ironsublimate.simplememe.activity.WelcomeActivity;
 
