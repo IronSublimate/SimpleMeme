@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.ironsublimate.mememanaager"
+        applicationId "com.ironsublimate.simplememe"
         minSdkVersion 24
         targetSdkVersion 26
         versionCode 201808281
@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:26.+'
 
     //百度文字识别
-    implementation files('libs/ocr-sdk.jar')
+    //implementation files('libs/ocr-sdk.jar')
 
     //侧边栏
     implementation("com.mikepenz:materialdrawer:6.0.7@aar") {

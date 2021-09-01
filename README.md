@@ -24,6 +24,7 @@
 * [x] 首页启动页面的时间计算（1.5s） = 需要加载数据的时间 + 额外时间
 * [ ] 用户可以自己创建表情包合集，上传图片（保存本地，不会云端同步）
 * [ ] 首页头图改成图片轮播，仿造网易云的首页图片轮播
+* [ ] 减少manager类的实例化次数
 
 ## 应用亮点
 
@@ -57,5 +58,4 @@
 [ihewro/Android_Expression_Package](https://github.com/ihewro/Android_Expression_Package)
 
 欢迎star、fork、pl~
-
 

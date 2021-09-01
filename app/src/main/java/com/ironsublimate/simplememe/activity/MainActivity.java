@@ -37,10 +37,10 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
-import com.baidu.ocr.sdk.OCR;
-import com.baidu.ocr.sdk.OnResultListener;
-import com.baidu.ocr.sdk.exception.OCRError;
-import com.baidu.ocr.sdk.model.AccessToken;
+//import com.baidu.ocr.sdk.OCR;
+//import com.baidu.ocr.sdk.OnResultListener;
+//import com.baidu.ocr.sdk.exception.OCRError;
+//import com.baidu.ocr.sdk.model.AccessToken;
 import com.blankj.ALog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                 }
                                 break;
                             case 10://捐赠
-                                MiniPayUtils.setupPay(MainActivity.this, new Config.Builder("FKX07840DBMQMUHP92W1DD", R.drawable.alipay, R.drawable.wechatpay).build());
+                                MiniPayUtils.setupPay(MainActivity.this, new Config.Builder("fkx15914zyuu4rnmbzr2td5", R.drawable.alipay, R.drawable.wechatpay).build());
                                 break;
 
                             case 11://检查更新
@@ -444,23 +444,23 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
      * 用明文ak，sk初始化
      */
     private void initAccessTokenWithAkSk() {
-        OCR.getInstance(this).initAccessTokenWithAkSk(new OnResultListener<AccessToken>() {
-            @Override
-            public void onResult(AccessToken result) {
-                String token = result.getAccessToken();
-            }
-
-            @Override
-            public void onError(OCRError error) {
-                error.printStackTrace();
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toasty.info(MainActivity.this, "获取百度文字识别接口失败").show();
-                    }
-                });
-            }
-        }, getApplicationContext(), "6AsWoPOwdFEn5G17glMkGFVd", "014yBWxaRMBaQRnZD5Brg83sAzujGNOK");
+//        OCR.getInstance(this).initAccessTokenWithAkSk(new OnResultListener<AccessToken>() {
+//            @Override
+//            public void onResult(AccessToken result) {
+//                String token = result.getAccessToken();
+//            }
+//
+//            @Override
+//            public void onError(OCRError error) {
+//                error.printStackTrace();
+//                MainActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toasty.info(MainActivity.this, "获取百度文字识别接口失败").show();
+//                    }
+//                });
+//            }
+//        }, getApplicationContext(), "6AsWoPOwdFEn5G17glMkGFVd", "014yBWxaRMBaQRnZD5Brg83sAzujGNOK");
     }
 
 

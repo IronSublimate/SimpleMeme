@@ -7,6 +7,8 @@ import org.litepal.LitePal;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
+import java.util.HashMap;
+
 /**
  * <pre>
  *     author : hewro
@@ -29,6 +31,8 @@ public class Expression extends LitePalSupport {
     private int desStatus;//是否有图片描述，1为有，0为无
     @Column(ignore = true)
     private byte[] image = null;//图片内容，二进制存储
+//    @Column(ignore = true)
+//    static HashMap<Integer,byte[]> imageBuffer = new HashMap<Integer,byte[]>();
 
 
     public Expression() {
@@ -111,7 +115,12 @@ public class Expression extends LitePalSupport {
 
     public byte[] getImage() {
         if (this.image == null || this.image.length == 0) {
-            this.image = FileUtil.fileToBytes(this.url);
+//            if(imageBuffer.containsKey(this.id)){
+//                this.image = imageBuffer.get(this.id);
+//            } else {
+                this.image = FileUtil.fileToBytes(this.url);
+//                imageBuffer.put(this.id,this.image);
+//            }
         }
         return image;
     }
@@ -123,5 +132,6 @@ public class Expression extends LitePalSupport {
 
     public void setImage(byte[] image) {
         this.image = image;
+//        imageBuffer.put(this.id,this.image);
     }
 }

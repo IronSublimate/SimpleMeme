@@ -28,7 +28,7 @@
             android:enabled="true"
             android:exported="true"
             android:icon="@drawable/logo"
-            android:label="表情宝"
+            android:label="小表情"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
@@ -37,7 +37,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="ironsublimate.mememanager.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

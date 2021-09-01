@@ -290,23 +290,23 @@ public class ExpImageDialog extends MaterialDialog{
 
     private void initListener(){
 
-        //保存图片到本地
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
-                    @Override
-                    public void onFinish(Boolean result) {
-                        if (result){
-                            Toasty.success(UIUtil.getContext(),"已保存到" +GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName(), Toast.LENGTH_SHORT).show();
-                            FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                        }else {
-                            Toasty.error(activity,"保存失败，请检查是否允许应用获取存储权限",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },activity).execute(expression);
-            }
-        });
+//        //保存图片到本地
+//        save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
+//                    @Override
+//                    public void onFinish(Boolean result) {
+//                        if (result){
+//                            Toasty.success(UIUtil.getContext(),"已保存到" +GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName(), Toast.LENGTH_SHORT).show();
+//                            FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+//                        }else {
+//                            Toasty.error(activity,"保存失败，请检查是否允许应用获取存储权限",Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                },activity).execute(expression);
+//            }
+//        });
 
         //调用系统分享
         share.setOnClickListener(new View.OnClickListener() {
@@ -317,7 +317,8 @@ public class ExpImageDialog extends MaterialDialog{
                     public void onFinish(Boolean result) {
                         if (result){
                             FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+//                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+                            File filePath = new File(expression.getUrl());
                             Log.e("filepath",filePath.getAbsolutePath());
                             Intent shareIntent = new Intent();
                             shareIntent.setAction(Intent.ACTION_SEND);
@@ -325,6 +326,7 @@ public class ExpImageDialog extends MaterialDialog{
                                     activity,
                                     UIUtil.getContext().getPackageName() + ".fileprovider",
                                     filePath);
+//                            Uri imageUri = expression.getUrl();
 
                             shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
                             shareIntent.setType("image/*");
