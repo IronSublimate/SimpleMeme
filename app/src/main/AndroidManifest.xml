@@ -45,7 +45,6 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name="com.ironsublimate.simplememe.activity.ShopActivity" />
         <activity android:name="com.ironsublimate.simplememe.activity.MyActivity" />
         <activity android:name="com.ironsublimate.simplememe.activity.ExpWebFolderDetailActivity" />
         <activity android:name="com.ironsublimate.simplememe.activity.WelcomeActivity">

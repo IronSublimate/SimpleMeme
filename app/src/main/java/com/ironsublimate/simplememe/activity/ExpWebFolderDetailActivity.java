@@ -19,7 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ironsublimate.simplememe.R;
 import com.ironsublimate.simplememe.adapter.ExpressionListAdapter;
 import com.ironsublimate.simplememe.bean.Expression;
-import com.ironsublimate.simplememe.http.HttpUtil;
+//import com.ironsublimate.simplememe.http.HttpUtil;
 import com.ironsublimate.simplememe.task.DownloadImageTask;
 import com.ironsublimate.simplememe.util.UIUtil;
 import com.ironsublimate.simplememe.view.AvatarImageView;
@@ -161,61 +161,61 @@ public class ExpWebFolderDetailActivity extends BaseActivity {
             ALog.d("当前页数page", currentPage);
             ALog.d("pageSize", expressionList.size());
         } else {
-            call = HttpUtil.getExpressionList(dirId, page, 30, dirName, new Callback<List<Expression>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<Expression>> call, @NonNull final Response<List<Expression>> response) {
-                    if (response.isSuccessful()) {
-                        Toasty.success(UIUtil.getContext(), "请求成功", Toast.LENGTH_SHORT).show();
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (page == 1) {//如果是上拉刷新，则需要新清空数据
-                                    expressionList.clear();
-                                }
-                                expressionList.addAll(response.body());
-
-                                ExpWebFolderDetailActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (page == 1) {//上拉刷新数据
-                                            if (response.body().size() == 0 || response.body() == null) {//显示空布局
-                                                adapter.setNewData(null);
-                                                adapter.setEmptyView(notDataView);
-                                            } else {
-                                                adapter.setNewData(response.body());
-                                            }
-                                            refreshLayout.finishRefresh(true);
-                                        } else {//下拉增加数据
-                                            adapter.addData(response.body());
-                                            refreshLayout.finishLoadMore(true);
-                                            ALog.d("增加数据当前的页数" + currentPage);
-                                        }
-                                        currentPage++;
-                                    }
-                                });
-                            }
-                        }).start();
-                    } else {
-                        Toasty.error(ExpWebFolderDetailActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                        if (page == 1) {
-                            refreshLayout.finishRefresh(false);
-                        } else {
-                            refreshLayout.finishLoadMore(false);
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<List<Expression>> call, @NonNull Throwable t) {
-                    Toasty.info(ExpWebFolderDetailActivity.this, "请求失败或取消请求", Toast.LENGTH_SHORT).show();
-                    refreshLayout.finishRefresh(false);
-                    if (page == 1) {
-                        refreshLayout.finishRefresh(false);
-                    } else {
-                        refreshLayout.finishLoadMore(false);
-                    }
-                }
-            });
+//            call = HttpUtil.getExpressionList(dirId, page, 30, dirName, new Callback<List<Expression>>() {
+//                @Override
+//                public void onResponse(@NonNull Call<List<Expression>> call, @NonNull final Response<List<Expression>> response) {
+//                    if (response.isSuccessful()) {
+//                        Toasty.success(UIUtil.getContext(), "请求成功", Toast.LENGTH_SHORT).show();
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if (page == 1) {//如果是上拉刷新，则需要新清空数据
+//                                    expressionList.clear();
+//                                }
+//                                expressionList.addAll(response.body());
+//
+//                                ExpWebFolderDetailActivity.this.runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        if (page == 1) {//上拉刷新数据
+//                                            if (response.body().size() == 0 || response.body() == null) {//显示空布局
+//                                                adapter.setNewData(null);
+//                                                adapter.setEmptyView(notDataView);
+//                                            } else {
+//                                                adapter.setNewData(response.body());
+//                                            }
+//                                            refreshLayout.finishRefresh(true);
+//                                        } else {//下拉增加数据
+//                                            adapter.addData(response.body());
+//                                            refreshLayout.finishLoadMore(true);
+//                                            ALog.d("增加数据当前的页数" + currentPage);
+//                                        }
+//                                        currentPage++;
+//                                    }
+//                                });
+//                            }
+//                        }).start();
+//                    } else {
+//                        Toasty.error(ExpWebFolderDetailActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+//                        if (page == 1) {
+//                            refreshLayout.finishRefresh(false);
+//                        } else {
+//                            refreshLayout.finishLoadMore(false);
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(@NonNull Call<List<Expression>> call, @NonNull Throwable t) {
+//                    Toasty.info(ExpWebFolderDetailActivity.this, "请求失败或取消请求", Toast.LENGTH_SHORT).show();
+//                    refreshLayout.finishRefresh(false);
+//                    if (page == 1) {
+//                        refreshLayout.finishRefresh(false);
+//                    } else {
+//                        refreshLayout.finishLoadMore(false);
+//                    }
+//                }
+//            });
         }
     }
 

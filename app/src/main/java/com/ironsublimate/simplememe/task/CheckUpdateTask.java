@@ -16,8 +16,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.ALog;
 import com.ironsublimate.simplememe.GlobalConfig;
 import com.ironsublimate.simplememe.bean.Version;
-import com.ironsublimate.simplememe.http.HttpUtil;
-import com.ironsublimate.simplememe.http.WebImageInterface;
+//import com.ironsublimate.simplememe.http.HttpUtil;
+//import com.ironsublimate.simplememe.http.WebImageInterface;
 import com.ironsublimate.simplememe.util.APKVersionCodeUtils;
 import com.ironsublimate.simplememe.util.UIUtil;
 
@@ -60,52 +60,52 @@ public class CheckUpdateTask {
 
 
     public boolean execute(){
-        final MaterialDialog loading = new MaterialDialog.Builder(activity)
-                .content("检查更新中……")
-                .progress(true, 0)
-                .progressIndeterminateStyle(true)
-                .show();
-
-        final Retrofit retrofit = HttpUtil.getRetrofit(10,10,10);
-        final WebImageInterface request = retrofit.create(WebImageInterface.class);
-        Call<Version> call = request.getAndroidLatestVersion(APKVersionCodeUtils.getVersionCode(activity));
-
-        call.enqueue(new Callback<Version>() {
-            @Override
-            public void onResponse(Call<Version> call, final Response<Version> response) {
-                ALog.d("请求成功" + response.body().toString());
-                if (response.isSuccessful()){
-                    if (response.body().isUpdate()){
-                        new MaterialDialog.Builder(activity)
-                                .title("是否立即下载最新版本？")
-                                .content("更新内容：" + response.body().getUpdateText())
-                                .positiveText("我想下载")
-                                .negativeText("先算了吧")
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        //下载新的版本
-                                        dialog.dismiss();
-                                        version = response.body();
-                                        downloadApk();
-                                    }
-                                })
-                                .show();
-                    }else {
-                        //没有更新
-                        ALog.d("当前版本已经是最新版本");
-                        Toasty.info(activity,"当前版本已经是最新版本", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                loading.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<Version> call, Throwable t) {
-                ALog.d(t.getMessage());
-                loading.dismiss();
-            }
-        });
+//        final MaterialDialog loading = new MaterialDialog.Builder(activity)
+//                .content("检查更新中……")
+//                .progress(true, 0)
+//                .progressIndeterminateStyle(true)
+//                .show();
+//
+//        final Retrofit retrofit = HttpUtil.getRetrofit(10,10,10);
+//        final WebImageInterface request = retrofit.create(WebImageInterface.class);
+//        Call<Version> call = request.getAndroidLatestVersion(APKVersionCodeUtils.getVersionCode(activity));
+//
+//        call.enqueue(new Callback<Version>() {
+//            @Override
+//            public void onResponse(Call<Version> call, final Response<Version> response) {
+//                ALog.d("请求成功" + response.body().toString());
+//                if (response.isSuccessful()){
+//                    if (response.body().isUpdate()){
+//                        new MaterialDialog.Builder(activity)
+//                                .title("是否立即下载最新版本？")
+//                                .content("更新内容：" + response.body().getUpdateText())
+//                                .positiveText("我想下载")
+//                                .negativeText("先算了吧")
+//                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                                    @Override
+//                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                        //下载新的版本
+//                                        dialog.dismiss();
+//                                        version = response.body();
+//                                        downloadApk();
+//                                    }
+//                                })
+//                                .show();
+//                    }else {
+//                        //没有更新
+//                        ALog.d("当前版本已经是最新版本");
+//                        Toasty.info(activity,"当前版本已经是最新版本", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                loading.dismiss();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Version> call, Throwable t) {
+//                ALog.d(t.getMessage());
+//                loading.dismiss();
+//            }
+//        });
 
 
         return true;
@@ -114,61 +114,61 @@ public class CheckUpdateTask {
 
     private void downloadApk(){
 
-        String filePath = GlobalConfig.appDirPath;
-        File dir = new File(filePath);
-        if (!dir.exists())dir.mkdir();
-        final File apk = new File(filePath+version.getLatestCode()+".apk");//apk文件以versioncode命名
-        if (!apk.exists()){//如果本地没有最新版本的apk了，需要下载
-            if (version.isAssets()){//判断是否有下载地址
-                final Retrofit retrofit = HttpUtil.getRetrofit(10,10,10);
-                final WebImageInterface request = retrofit.create(WebImageInterface.class);
-                Call<ResponseBody> call1 = request.downloadWebUrl(version.getUrl());
-                ProgressManager.getInstance().addResponseListener(version.getUrl(), getDownloadListener());
-                downloadDialog = new MaterialDialog.Builder(activity)
-                        .title("正在下载最新版本apk")
-                        .content("陛下，耐心等下……")
-                        .progress(false, 100, true)
-                        .show();
-
-
-                call1.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()){//下载成功，把文件写入到本地，然后自动唤醒软件安装
-                            //写入文件
-                            assert response.body() != null;
-                            InputStream is = response.body().byteStream();
-                            try {
-                                FileOutputStream fos = null;
-                                fos = new FileOutputStream(apk);
-                                byte[] bytes = UIUtil.InputStreamTOByte(is);
-                                fos.write(bytes);
-                                fos.flush();
-                                fos.close();
-                            } catch (java.io.IOException e) {
-                                e.printStackTrace();
-                            }
-                            installApk();
-                        }else {
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        downloadDialog.dismiss();
-                    }
-                });
-
-            }else {//没有下载资源，直接跳转到发布页面
-                Uri uri = Uri.parse(version.getUrl());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                activity.startActivity(intent);
-            }
-        }else {
-            installApk();//直接安装即可
-        }
+//        String filePath = GlobalConfig.appDirPath;
+//        File dir = new File(filePath);
+//        if (!dir.exists())dir.mkdir();
+//        final File apk = new File(filePath+version.getLatestCode()+".apk");//apk文件以versioncode命名
+//        if (!apk.exists()){//如果本地没有最新版本的apk了，需要下载
+//            if (version.isAssets()){//判断是否有下载地址
+//                final Retrofit retrofit = HttpUtil.getRetrofit(10,10,10);
+//                final WebImageInterface request = retrofit.create(WebImageInterface.class);
+//                Call<ResponseBody> call1 = request.downloadWebUrl(version.getUrl());
+//                ProgressManager.getInstance().addResponseListener(version.getUrl(), getDownloadListener());
+//                downloadDialog = new MaterialDialog.Builder(activity)
+//                        .title("正在下载最新版本apk")
+//                        .content("陛下，耐心等下……")
+//                        .progress(false, 100, true)
+//                        .show();
+//
+//
+//                call1.enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        if (response.isSuccessful()){//下载成功，把文件写入到本地，然后自动唤醒软件安装
+//                            //写入文件
+//                            assert response.body() != null;
+//                            InputStream is = response.body().byteStream();
+//                            try {
+//                                FileOutputStream fos = null;
+//                                fos = new FileOutputStream(apk);
+//                                byte[] bytes = UIUtil.InputStreamTOByte(is);
+//                                fos.write(bytes);
+//                                fos.flush();
+//                                fos.close();
+//                            } catch (java.io.IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                            installApk();
+//                        }else {
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                        downloadDialog.dismiss();
+//                    }
+//                });
+//
+//            }else {//没有下载资源，直接跳转到发布页面
+//                Uri uri = Uri.parse(version.getUrl());
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                activity.startActivity(intent);
+//            }
+//        }else {
+//            installApk();//直接安装即可
+//        }
 
 
     }

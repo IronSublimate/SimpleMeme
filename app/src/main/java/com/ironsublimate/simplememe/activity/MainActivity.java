@@ -64,7 +64,7 @@ import com.ironsublimate.simplememe.callback.RemoveCacheListener;
 import com.ironsublimate.simplememe.callback.GetMainExpListener;
 import com.ironsublimate.simplememe.callback.TaskListener;
 import com.ironsublimate.simplememe.fragment.ExpressionContentFragment;
-import com.ironsublimate.simplememe.http.HttpUtil;
+//import com.ironsublimate.simplememe.http.HttpUtil;
 import com.ironsublimate.simplememe.task.CheckUpdateTask;
 import com.ironsublimate.simplememe.task.GenerateScreenshotTask;
 import com.ironsublimate.simplememe.task.RecoverDataTask;
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 .withSelectedItem(-1)
                 .addDrawerItems(
                         new SecondaryDrawerItem().withName("我的主页").withIcon(GoogleMaterial.Icon.gmd_home).withSelectable(false),//1
-                        new SecondaryDrawerItem().withName("表情商店").withIcon(GoogleMaterial.Icon.gmd_add_shopping_cart).withSelectable(false),//2
+                        removeCache,//2
                         new SecondaryDrawerItem().withName("我的表情").withIcon(GoogleMaterial.Icon.gmd_photo_library).withSelectable(false),//3
                         removeCache,//4
                         new SecondaryDrawerItem().withName("备份数据").withIcon(GoogleMaterial.Icon.gmd_file_download).withSelectable(false),//5
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                 result.closeDrawer();
                                 break;
                             case 2://进入表情商店
-                                ShopActivity.actionStart(MainActivity.this);
+                                //ShopActivity.actionStart(MainActivity.this);
                                 break;
                             case 3: //进入我的表情管理
                                 MyActivity.actionStart(MainActivity.this);
@@ -512,7 +512,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                     fabSearch.performClick();
                                     break;
                                 case 3:
-                                    ShopActivity.actionStart(MainActivity.this);
+//                                    ShopActivity.actionStart(MainActivity.this);
                                     break;
                             }
                         }
@@ -618,36 +618,36 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
 
         if (MyDataBase.isNeedGetOnes()) {//如果已经过时了，则需要从网络上请求数据
-            HttpUtil.getOnes(new Callback<OneDetailList>() {
-                @Override
-                public void onResponse(@NonNull Call<OneDetailList> call, @NonNull Response<OneDetailList> response) {
-
-                    //获取数据成功后删除旧的数据
-                    LitePal.deleteAll(OneDetailList.class);
-                    LitePal.deleteAll(OneDetail.class);
-
-                    //存储新的数据
-                    final OneDetailList oneDetailList = response.body();
-                    if (oneDetailList != null){
-                        oneDetailList.save();
-
-                        for (int i = 0; i < oneDetailList.getCount(); i++) {
-                            OneDetail oneDetail = oneDetailList.getOneDetailList().get(i);
-                            oneDetail.setOneDetailList(oneDetailList);
-                            oneDetail.save();
-                        }
-
-                        setOneUI(oneDetailList);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<OneDetailList> call, @NonNull Throwable t) {
-                    //什么也不做
-                    Toasty.error(MainActivity.this, "请求一个失败，请稍后重试", Toast.LENGTH_SHORT).show();
-                    ALog.d("请求失败" + t.getMessage());
-                }
-            });
+//            HttpUtil.getOnes(new Callback<OneDetailList>() {
+//                @Override
+//                public void onResponse(@NonNull Call<OneDetailList> call, @NonNull Response<OneDetailList> response) {
+//
+//                    //获取数据成功后删除旧的数据
+//                    LitePal.deleteAll(OneDetailList.class);
+//                    LitePal.deleteAll(OneDetail.class);
+//
+//                    //存储新的数据
+//                    final OneDetailList oneDetailList = response.body();
+//                    if (oneDetailList != null){
+//                        oneDetailList.save();
+//
+//                        for (int i = 0; i < oneDetailList.getCount(); i++) {
+//                            OneDetail oneDetail = oneDetailList.getOneDetailList().get(i);
+//                            oneDetail.setOneDetailList(oneDetailList);
+//                            oneDetail.save();
+//                        }
+//
+//                        setOneUI(oneDetailList);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(@NonNull Call<OneDetailList> call, @NonNull Throwable t) {
+//                    //什么也不做
+//                    Toasty.error(MainActivity.this, "请求一个失败，请稍后重试", Toast.LENGTH_SHORT).show();
+//                    ALog.d("请求失败" + t.getMessage());
+//                }
+//            });
         } else {
             setOneUI(LitePal.findFirst(OneDetailList.class, true));
         }

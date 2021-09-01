@@ -18,7 +18,7 @@ import com.ironsublimate.simplememe.R;
 import com.ironsublimate.simplememe.activity.ExpWebFolderDetailActivity;
 import com.ironsublimate.simplememe.bean.Expression;
 import com.ironsublimate.simplememe.bean.ExpressionFolder;
-import com.ironsublimate.simplememe.http.HttpUtil;
+//import com.ironsublimate.simplememe.http.HttpUtil;
 import com.ironsublimate.simplememe.task.DownloadImageTask;
 import com.ironsublimate.simplememe.util.UIUtil;
 
@@ -131,41 +131,41 @@ public class ExpShopRecyclerViewAdapter extends BaseQuickAdapter<ExpressionFolde
         }
 
         //下载表情包
-        helper.getView(R.id.download_exp).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                /*
-                1. 将文件下载到本地
-                2. 下载的图片信息存储到数据库中
-                3. 更新图库以便显示出下载的图片
-                */
-
-                final MaterialDialog getInfoDialog  = new MaterialDialog.Builder(activity)
-                        .title("操作通知")
-                        .content("正在获取表情包数据……")
-                        .progress(true, 0)
-                        .progressIndeterminateStyle(true)
-                        .show();
-                HttpUtil.getExpressionList(item.getDir(), 1, 99999999,item.getName(), new Callback<List<Expression>>() {//获取该目录下的所有表情包，不分页
-                    @Override
-                    public void onResponse(Call<List<Expression>> call, Response<List<Expression>> response) {
-                        if (response.isSuccessful()){
-                            getInfoDialog.dismiss();
-                            Toasty.success(activity,"获取表情包数据成功",Toast.LENGTH_SHORT).show();
-                            DownloadImageTask task = new DownloadImageTask(response.body(),item.getName(),item.getCount(),activity);
-                            task.execute();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<List<Expression>> call, Throwable t) {
-                        //获取表情包合集失败，终止下载
-                        Toasty.error(activity,"获取表情包数据失败",Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
+//        helper.getView(R.id.download_exp).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                /*
+//                1. 将文件下载到本地
+//                2. 下载的图片信息存储到数据库中
+//                3. 更新图库以便显示出下载的图片
+//                */
+//
+//                final MaterialDialog getInfoDialog  = new MaterialDialog.Builder(activity)
+//                        .title("操作通知")
+//                        .content("正在获取表情包数据……")
+//                        .progress(true, 0)
+//                        .progressIndeterminateStyle(true)
+//                        .show();
+//                HttpUtil.getExpressionList(item.getDir(), 1, 99999999,item.getName(), new Callback<List<Expression>>() {//获取该目录下的所有表情包，不分页
+//                    @Override
+//                    public void onResponse(Call<List<Expression>> call, Response<List<Expression>> response) {
+//                        if (response.isSuccessful()){
+//                            getInfoDialog.dismiss();
+//                            Toasty.success(activity,"获取表情包数据成功",Toast.LENGTH_SHORT).show();
+//                            DownloadImageTask task = new DownloadImageTask(response.body(),item.getName(),item.getCount(),activity);
+//                            task.execute();
+//                        }
+//                    }
+//                    @Override
+//                    public void onFailure(Call<List<Expression>> call, Throwable t) {
+//                        //获取表情包合集失败，终止下载
+//                        Toasty.error(activity,"获取表情包数据失败",Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//            }
+//        });
     }
 
 
