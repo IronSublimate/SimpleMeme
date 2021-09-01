@@ -38,7 +38,9 @@ public class MyDataBase {
         if (bytes == null) {
             return false;
         } else {
-            return addExpressionRecord(expression, bytes, source.getAbsolutePath());
+            expression.setUrl(source.getAbsolutePath());
+            expression.setImage(bytes);
+            return addExpressionRecord(expression);
         }
     }
 
@@ -61,21 +63,21 @@ public class MyDataBase {
     }
 
 
-    //从本地添加表情的时候用到
-    public static boolean addExpressionRecord(Expression expression, byte[] source, String url) {
+    //从本地添加表情的时候用到，会保存传入的expression的信息
+    public static boolean addExpressionRecord(Expression expression) {
         //1. 检查有没有表情对应的目录
         List<ExpressionFolder> expressionFolderList = LitePal.where("name = ? and exist = ?", expression.getFolderName(), String.valueOf(1)).find(ExpressionFolder.class);
         ExpressionFolder expressionFolder;//当前表情的目录的持久化对象
 
-        Expression currentExpression;//当前表情的持久化对象
+//        Expression currentExpression;//当前表情的持久化对象
 
         //2. 检查该目录中有没有该表情名称
         if (expressionFolderList.size() == 1) {
             expressionFolder = expressionFolderList.get(0);
             List<Expression> expressionList = queryExpListByNameAndFolderName(false, expression.getName(), expression.getFolderName());
             if (expressionList.size() > 0) {//有该表情的信息，就修改一下表情的文件内容即可
-                currentExpression = expressionList.get(0);
-                saveExpImage(currentExpression, source, false);
+                expression = expressionList.get(0);
+                //saveExpImage(expression, expression.getImage(), false);
                 return true;
             }
             ALog.d("目录存在，但是表情不存在");
@@ -88,14 +90,14 @@ public class MyDataBase {
         }
         //3. 把表情的信息存储进去,执行这里的时候有两种情况，一种是目录和表情都没有的。一种目录存在，但是表情不存在。
 //        currentExpression = new Expression(1,expression.getName(),GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName(),expression.getFolderName());
-        currentExpression = new Expression(1, expression.getName(), url, expression.getFolderName());
-        currentExpression.save();
-        saveExpImage(currentExpression, source, false);
+//        currentExpression = new Expression(1, expression.getName(), url, expression.getFolderName());
+        expression.save();
+        //saveExpImage(currentExpression, source, false);
 
         expressionFolder.setCount(expressionFolder.getCount() + 1);
 
         expressionFolder.save();
-        new GetExpDesTask(true).execute(currentExpression);
+        new GetExpDesTask(true).execute(expression);
         return true;
     }
 

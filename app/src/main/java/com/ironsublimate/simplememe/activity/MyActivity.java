@@ -58,6 +58,10 @@ import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ *
+ * 我的表情
+ */
 public class MyActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
 
     @BindView(R.id.toolbar)

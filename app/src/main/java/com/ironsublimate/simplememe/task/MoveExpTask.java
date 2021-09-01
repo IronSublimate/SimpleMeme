@@ -81,8 +81,8 @@ public class MoveExpTask extends AsyncTask<Void, Integer, Boolean> {
         for (Expression expression : expressionList) {
             //复制到
             if (status) {
-//                Expression newExp = new Expression(expression.getStatus(), expression.getName(), expression.getUrl(), folderName, expression.getImage());
-                MyDataBase.addExpressionRecord(expression, expression.getImage(), expression.getUrl());
+                Expression newExp = new Expression(expression.getStatus(), expression.getName(), expression.getUrl(), folderName, expression.getImage());
+                MyDataBase.addExpressionRecord(newExp);
             } else {
                 //移动到
                 String originFolderName = expression.getFolderName();

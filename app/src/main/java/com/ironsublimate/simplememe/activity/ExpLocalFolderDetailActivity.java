@@ -63,7 +63,7 @@ import es.dmoral.toasty.Toasty;
 
 
 /**
- * 显示本地表情包一个合集
+ * 显示本地表情包一个合集，进入文件夹后显示这个
  */
 public class ExpLocalFolderDetailActivity extends BaseActivity {
 

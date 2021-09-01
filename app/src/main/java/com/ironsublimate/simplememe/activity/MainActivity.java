@@ -553,7 +553,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         addExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShopActivity.actionStart(MainActivity.this);
+                MyActivity.actionStart(MainActivity.this);
             }
         });
 

@@ -10,7 +10,7 @@ import com.ironsublimate.simplememe.bean.Expression;
  *     author : ironsublimate
  *     e-mail : ihewro@163.com
  *     time   : 2018/07/11
- *     desc   :
+ *     desc   :generate description words by AI
  *     version: 1.0
  * </pre>
  */
