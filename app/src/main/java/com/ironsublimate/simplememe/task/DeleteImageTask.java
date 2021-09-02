@@ -99,7 +99,7 @@ public class DeleteImageTask extends AsyncTask<Void,Void,Boolean>{
                 List<ExpressionFolder> tempExpFolders = LitePal.where("name = ? and exist = ?",folderName, String.valueOf(1)).find(ExpressionFolder.class,true);
 
                 if (tempExpFolders.get(0).getCount() == 1){//如果删除该表情，目录为空，直接把目录删掉
-                    tempExpFolders.get(0).delete();
+//                    tempExpFolders.get(0).delete();
                 }else {
                     tempExpFolders.get(0).setCount(tempExpFolders.get(0).getCount() - 1);
                     tempExpFolders.get(0).save();

@@ -54,7 +54,7 @@ public class UpdateDatabaseTask  extends AsyncTask<Void, Integer, Boolean> {
         List<ExpressionFolder> expressionFolderList = LitePal.findAll(ExpressionFolder.class);
         for (ExpressionFolder expressionFolder:
              expressionFolderList) {
-            List<Expression> expressions = LitePal.select("id","name","foldername","status","url","desstatus","description").where("foldername = ?",expressionFolder.getName()).find(Expression.class,true);
+            List<Expression> expressions = LitePal.select("id","foldername","status","url","desstatus","description").where("foldername = ?",expressionFolder.getName()).find(Expression.class,true);
 
 
             //修正表情包的数目
@@ -63,7 +63,7 @@ public class UpdateDatabaseTask  extends AsyncTask<Void, Integer, Boolean> {
         }
 
         //循环遍历每个表情，修正描述内容，和删除无用的表情项
-        List<Expression> expressionList = LitePal.select("id","name","foldername","status","url","desstatus","description").find(Expression.class,true);
+        List<Expression> expressionList = LitePal.select("id","foldername","status","url","desstatus","description").find(Expression.class,true);
         for (Expression expression: expressionList){
             List<ExpressionFolder> expressionFolders = LitePal.where("name = ?",expression.getFolderName()).find(ExpressionFolder.class);
             if (expressionFolders.size() <=0){

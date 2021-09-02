@@ -25,7 +25,7 @@ public final class CheckPermissionUtils {
      * 在这里数组中添加你需要申请的权限名称
      */
     private static String[] permissions = new String[]{
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
     };
 

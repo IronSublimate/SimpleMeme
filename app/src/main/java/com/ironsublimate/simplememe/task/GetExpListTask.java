@@ -47,7 +47,7 @@ public class GetExpListTask extends AsyncTask<String,Void,List<Expression>>{
             if (isImage){
                 expressionList = LitePal.where("foldername = ?",name).find(Expression.class);
             }else {
-                expressionList = LitePal.select("id","name","foldername","status","url","desstatus","description").where("foldername = ?",name).find(Expression.class);
+                expressionList = LitePal.select("id","foldername","status","url","desstatus","description").where("foldername = ?",name).find(Expression.class);
             }
 
             sleep(800);

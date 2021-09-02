@@ -169,7 +169,7 @@ public class DownloadImageTask  {
 //                                }else {
 ////检查数据库里面有没有这个表情的信息，如果有的话，就不用修改数据库信息了
 //                                    isExistInFolder = false;
-//                                    List<Expression> temp = LitePal.select("id","name","foldername","status","url","desstatus","description").where("name = ? and foldername = ?",expFolderAllExpList.get(finalI).getName(),folderName).find(Expression.class);
+//                                    List<Expression> temp = LitePal.select("id","foldername","status","url","desstatus","description").where("name = ? and foldername = ?",expFolderAllExpList.get(finalI).getName(),folderName).find(Expression.class);
 //                                    if (temp.size()>0){//找到记录了
 //                                        isExistInFolder = true;
 //                                    }

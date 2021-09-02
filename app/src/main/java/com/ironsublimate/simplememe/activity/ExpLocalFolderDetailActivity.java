@@ -439,20 +439,20 @@ public class ExpLocalFolderDetailActivity extends BaseActivity {
                             }
                         }
                     }).show();
-        } else if (item.getItemId() == R.id.all_download) {
-            //下载到手机
-            new MaterialDialog.Builder(this)
-                    .title("下载提示")
-                    .content("从[表情商店]下载的图片以二进制存储在本地数据库中，不[下载到本地]仍然可以离线使用，无需流量。\n\n [下载到手机]表示将图片以文件形式存在在手机存储卡中")
-                    .negativeText("那就不下载了")
-                    .positiveText("给我下载")
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            new SaveFolderToLocalTask(ExpLocalFolderDetailActivity.this, expressionList.size(), dirName).execute(expressionList);
-                        }
-                    })
-                    .show();
+//        } else if (item.getItemId() == R.id.all_download) {
+//            //下载到手机
+//            new MaterialDialog.Builder(this)
+//                    .title("下载提示")
+//                    .content("从[表情商店]下载的图片以二进制存储在本地数据库中，不[下载到本地]仍然可以离线使用，无需流量。\n\n [下载到手机]表示将图片以文件形式存在在手机存储卡中")
+//                    .negativeText("那就不下载了")
+//                    .positiveText("给我下载")
+//                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                        @Override
+//                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                            new SaveFolderToLocalTask(ExpLocalFolderDetailActivity.this, expressionList.size(), dirName).execute(expressionList);
+//                        }
+//                    })
+//                    .show();
 
         } else if (item.getItemId() == R.id.all_delete) {
             //删除本地文件

@@ -16,6 +16,7 @@ import java.util.HashMap;
  *     time   : 2018/07/04
  *     desc   : 这个表缓存本地的表情图片的信息，这样不必每次都显示表情包都从内存中循环遍历
  *     notice  : 注意，这里我为了偷懒，减少数据转化，直接Expression这个类拿来用了，好处是不用再转换数据了，坏处是，这里面继承了LitePalSupport，导致额外的一些变量，但是不影响我们的使用
+ *     notice  : 注意，改了属性后要全局搜索LitePal.select和LitePal.where
  *     version: 1.0
  * </pre>
  */

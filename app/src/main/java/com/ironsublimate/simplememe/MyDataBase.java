@@ -181,9 +181,9 @@ public class MyDataBase {
 
     public static List<Expression> queryExpListByNameAndFolderName(boolean isImage, String name, String folderName) {
         if (isImage) {
-            return LitePal.where("name = ? and foldername = ?", name, folderName).find(Expression.class);
+            return LitePal.where("url like ? and foldername = ?", '%' + name, folderName).find(Expression.class);
         } else {
-            return LitePal.select("id", "name", "foldername", "status", "url", "desstatus", "description").where("name = ? and foldername = ?", name, folderName).find(Expression.class);
+            return LitePal.select("id", "foldername", "status", "url", "desstatus", "description").where("url like ? and foldername = ?", '%' + name, folderName).find(Expression.class);
         }
     }
 

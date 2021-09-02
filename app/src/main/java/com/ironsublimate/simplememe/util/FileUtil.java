@@ -35,11 +35,11 @@ public class FileUtil {
      * 从图片库中删除图片
      */
     public static void deleteImageFromGallery(String file){
-        File file1 = new File(file);
-        if (file1.exists() || file != ""){
-            new File(file).delete();
-            updateMediaStore(UIUtil.getContext(),file);
-        }
+//        File file1 = new File(file);
+//        if (file1.exists() || file != ""){
+//            new File(file).delete();
+//            updateMediaStore(UIUtil.getContext(),file);
+//        }
     }
 
     /**
@@ -61,32 +61,32 @@ public class FileUtil {
      */
     public static  boolean delAllFile(String path) {
         boolean flag = false;
-        File file = new File(path);
-        if (!file.exists()) {
-            return flag;
-        }
-        if (!file.isDirectory()) {
-            return flag;
-        }
-        String[] tempList = file.list();
-        File temp = null;
-        for (int i = 0; i < tempList.length; i++) {
-            if (path.endsWith(File.separator)) {
-                temp = new File(path + tempList[i]);
-            } else {
-                temp = new File(path + File.separator + tempList[i]);
-            }
-            if (temp.isFile()) {
-                String tempPath = temp.getAbsolutePath();
-                temp.delete();
-                updateMediaStore(UIUtil.getContext(),tempPath);
-            }
-            if (temp.isDirectory()) {
-                delAllFile(path + "/" + tempList[i]);// 先删除文件夹里面的文件
-                delFolder(path + "/" + tempList[i]);// 再删除空文件夹
-                flag = true;
-            }
-        }
+//        File file = new File(path);
+//        if (!file.exists()) {
+//            return flag;
+//        }
+//        if (!file.isDirectory()) {
+//            return flag;
+//        }
+//        String[] tempList = file.list();
+//        File temp = null;
+//        for (int i = 0; i < tempList.length; i++) {
+//            if (path.endsWith(File.separator)) {
+//                temp = new File(path + tempList[i]);
+//            } else {
+//                temp = new File(path + File.separator + tempList[i]);
+//            }
+//            if (temp.isFile()) {
+//                String tempPath = temp.getAbsolutePath();
+//                temp.delete();
+//                updateMediaStore(UIUtil.getContext(),tempPath);
+//            }
+//            if (temp.isDirectory()) {
+//                delAllFile(path + "/" + tempList[i]);// 先删除文件夹里面的文件
+//                delFolder(path + "/" + tempList[i]);// 再删除空文件夹
+//                flag = true;
+//            }
+//        }
         return flag;
     }
 
