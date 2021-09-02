@@ -24,7 +24,7 @@ public class Expression extends LitePalSupport {
 
     private int id;//主键
     private int status;//标志位，图片来源：~~-1 apk内置图片~~ 1 数据库图片 2 网络图片 3 本机图片（数据库中没有存，头图分享卡片就是这种类型）
-    private String name;//图片名称
+//    private String name;//图片名称
     private String url;//图片路径或者图片地址
     private String folderName;//目录的名称
     private String description;//图片描述
@@ -42,14 +42,14 @@ public class Expression extends LitePalSupport {
     //构造方法里面增加了ExpressionFolder，避免某些情况，无法自动关联外键的情况，快被这个外键折腾疯了
     public Expression(int status, String name, String url, String folderName) {
         this.status = status;
-        this.name = name;
+//        this.name = name;
         this.url = url;
         this.folderName = folderName;
     }
 
     public Expression(int status, String name, String url, String folderName, byte[] image) {
         this.status = status;
-        this.name = name;
+//        this.name = name;
         this.url = url;
         this.folderName = folderName;
         this.image = image;
@@ -65,11 +65,12 @@ public class Expression extends LitePalSupport {
     }
 
     public String getName() {
-        return name;
+        String[] ss = url.split("/");
+        return ss[ss.length - 1];
     }
 
     public void setName(String name) {
-        this.name = name;
+//        this.name = name;
     }
 
     public String getUrl() {
@@ -118,7 +119,7 @@ public class Expression extends LitePalSupport {
 //            if(imageBuffer.containsKey(this.id)){
 //                this.image = imageBuffer.get(this.id);
 //            } else {
-                this.image = FileUtil.fileToBytes(this.url);
+            this.image = FileUtil.fileToBytes(this.url);
 //                imageBuffer.put(this.id,this.image);
 //            }
         }

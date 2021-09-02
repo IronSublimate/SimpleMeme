@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.FileProvider;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import com.ironsublimate.simplememe.bean.EventMessage;
 import com.ironsublimate.simplememe.bean.Expression;
 import com.ironsublimate.simplememe.callback.GetExpImageListener;
 import com.ironsublimate.simplememe.callback.SaveImageToGalleryListener;
+import com.ironsublimate.simplememe.task.GetExpDesTask;
 import com.ironsublimate.simplememe.task.GetExpImageTask;
 import com.ironsublimate.simplememe.task.SaveImageToGalleryTask;
 import com.ironsublimate.simplememe.util.FileUtil;
@@ -52,7 +55,7 @@ import es.dmoral.toasty.Toasty;
  *     version: 1.0
  * </pre>
  */
-public class ExpImageDialog extends MaterialDialog{
+public class ExpImageDialog extends MaterialDialog {
 
 
     //自定义布局
@@ -89,7 +92,6 @@ public class ExpImageDialog extends MaterialDialog{
     };
 
 
-
     ExpImageDialog(Builder builder) {
         super(builder);
         this.builder = builder;
@@ -98,7 +100,7 @@ public class ExpImageDialog extends MaterialDialog{
         initListener();//注册监听器
     }
 
-    private void initData(){
+    private void initData() {
         this.activity = this.builder.activity;
         this.fragment = this.builder.fragment;
         this.position = this.builder.position;
@@ -107,38 +109,39 @@ public class ExpImageDialog extends MaterialDialog{
 
     /**
      * 获取到最新的控件数据
+     *
      * @param expression
      */
-    public void setImageData(Expression expression){
+    public void setImageData(Expression expression) {
         this.expression = expression;
     }
 
     /**
      * 更新对话框的界面数据
      */
-    private void updateUI(){
-        if (expression.getStatus() == 1){//本地图片，显示图片识别框
+    private void updateUI() {
+        if (expression.getStatus() == 1) {//本地图片，显示图片识别框
             inputView.setVisibility(View.VISIBLE);
-            if (new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName()).exists()){
+            if (new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName()).exists()) {
                 delete.setVisibility(View.VISIBLE);
                 save.setVisibility(View.GONE);
-            }else {
+            } else {
                 save.setVisibility(View.VISIBLE);
                 delete.setVisibility(View.GONE);
             }
-            if (expression.getDesStatus() == 1){
+            if (expression.getDesStatus() == 1) {
                 inputText.setText(expression.getDescription());
-            }else {
+            } else {
                 inputText.setText("");
             }
-        } else if (expression.getStatus() == 3){
+        } else if (expression.getStatus() == 3) {
             delete.setVisibility(View.VISIBLE);
             save.setVisibility(View.GONE);
-        } else if (expression.getStatus() == 2){
+        } else if (expression.getStatus() == 2) {
             delete.setVisibility(View.GONE);
             inputView.setVisibility(View.GONE);
         }
-        UIUtil.setImageToImageView(expression,ivExpression);
+        UIUtil.setImageToImageView(expression, ivExpression);
         tvExpression.setText(expression.getName());
     }
 
@@ -151,15 +154,15 @@ public class ExpImageDialog extends MaterialDialog{
 
     }
 
-    private void initTapView(){
+    private void initTapView() {
         int leftButton;
         String title;
         String des;
-        if (new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName()).exists()){
+        if (new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName()).exists()) {
             leftButton = R.id.delete_image;
             title = "删除图片";
             des = "点击删除该图片在本地的文件\n\n但你仍然可以离线使用";
-        }else {
+        } else {
             leftButton = R.id.save_image;
             title = "保存到本地";
             des = "点击保存到本地以文件形式存储";
@@ -168,9 +171,9 @@ public class ExpImageDialog extends MaterialDialog{
         List<TapTarget> tapTargets = new ArrayList<>();
 
         TapTarget imageDesTarget;
-        if (expression.getStatus() == 2){//网络图片
+        if (expression.getStatus() == 2) {//网络图片
             imageDesTarget = null;
-        }else {
+        } else {
             imageDesTarget = TapTarget.forView(findViewById(R.id.input_view), "图片描述区", "填写图片描述可以帮助你更快的搜索到相应表情\n\n你可以使用自动识别功能自动识别图片中的文字")
                     .textTypeface(Typeface.SANS_SERIF) //指定字体
                     .drawShadow(true)
@@ -201,13 +204,13 @@ public class ExpImageDialog extends MaterialDialog{
 
             tapTargets.add(leftButtonTarget);
             tapTargets.add(shareTarget);
-            if (leftButton == R.id.delete_image){
+            if (leftButton == R.id.delete_image) {
                 MySharePreference.getUserUsedStatus("isDeleteImage");
-            }else {
+            } else {
                 MySharePreference.getUserUsedStatus("isSaveImage");
             }
 
-            if (imageDesTarget != null){
+            if (imageDesTarget != null) {
                 tapTargets.add(imageDesTarget);
                 MySharePreference.getUserUsedStatus("isImageDes");
             }
@@ -222,7 +225,7 @@ public class ExpImageDialog extends MaterialDialog{
 
                         @Override
                         public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-                            switch (lastTarget.id()){
+                            switch (lastTarget.id()) {
                                 case 1:
                                     break;
                                 case 2:
@@ -238,9 +241,9 @@ public class ExpImageDialog extends MaterialDialog{
                         }
                     })
                     .start();
-        }else {//已经不是第一次打开图片弹窗，但是删除按钮或者保存按钮是第一次使用
+        } else {//已经不是第一次打开图片弹窗，但是删除按钮或者保存按钮是第一次使用
             tapTargets.clear();
-            if (MySharePreference.getUserUsedStatus("isSaveImage") == 0 || MySharePreference.getUserUsedStatus("isDeleteImage") == 0){
+            if (MySharePreference.getUserUsedStatus("isSaveImage") == 0 || MySharePreference.getUserUsedStatus("isDeleteImage") == 0) {
                 TapTarget buttonTarget = TapTarget.forView(findViewById(leftButton), title, des)
                         .textTypeface(Typeface.SANS_SERIF) //指定字体
                         .drawShadow(true).cancelable(false).tintTarget(true)//
@@ -251,14 +254,14 @@ public class ExpImageDialog extends MaterialDialog{
                 tapTargets.add(buttonTarget);
 
             }
-            if (imageDesTarget != null){
-                if (MySharePreference.getUserUsedStatus("isImageDes") == 0){
+            if (imageDesTarget != null) {
+                if (MySharePreference.getUserUsedStatus("isImageDes") == 0) {
                     tapTargets.add(imageDesTarget);
                 }
             }
 
 
-            if (tapTargets.size() > 0){
+            if (tapTargets.size() > 0) {
                 new TapTargetSequence(this).targets(tapTargets).start();
             }
 
@@ -266,7 +269,7 @@ public class ExpImageDialog extends MaterialDialog{
         }
     }
 
-    private void initView(){
+    private void initView() {
 
         View view = getCustomView();
         assert view != null;
@@ -288,7 +291,7 @@ public class ExpImageDialog extends MaterialDialog{
 
     }
 
-    private void initListener(){
+    private void initListener() {
 
 //        //保存图片到本地
 //        save.setOnClickListener(new View.OnClickListener() {
@@ -312,29 +315,31 @@ public class ExpImageDialog extends MaterialDialog{
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
-                    @Override
-                    public void onFinish(Boolean result) {
-                        if (result){
-                            FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+//                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
+//                    @Override
+//                    public void onFinish(Boolean result) {
+//                        if (result){
+//                            FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
 //                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            File filePath = new File(expression.getUrl());
-                            Log.e("filepath",filePath.getAbsolutePath());
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            Uri imageUri = FileProvider.getUriForFile(
-                                    activity,
-                                    UIUtil.getContext().getPackageName() + ".fileprovider",
-                                    filePath);
+                File filePath = new File(expression.getUrl());
+                Log.i("filepath", filePath.getAbsolutePath());
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.addFlags(
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                Uri imageUri = FileProvider.getUriForFile(
+                        activity,
+                        UIUtil.getContext().getPackageName() + ".fileprovider",
+                        filePath);
 //                            Uri imageUri = expression.getUrl();
 
-                            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                            shareIntent.setType("image/*");
-                            activity.startActivity(Intent.createChooser(shareIntent, "分享到"));
-                        }
-                    }
-                },activity).execute(expression);
-
+                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                shareIntent.setType("image/*");
+                activity.startActivity(Intent.createChooser(shareIntent, "分享到"));
+//                        }
+//                    }
+//                },activity).execute(expression);
+//
             }
         });
 
@@ -342,49 +347,55 @@ public class ExpImageDialog extends MaterialDialog{
         timShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
-                    @Override
-                    public void onFinish(Boolean result) {
-                        if (result){
-                            FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            Log.e("filepath", filePath.getAbsolutePath());
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            Uri imageUri = FileProvider.getUriForFile(
-                                    activity,
-                                    UIUtil.getContext().getPackageName() + ".fileprovider",
-                                    filePath);
+//                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
+//                    @Override
+//                    public void onFinish(Boolean result) {
+//                        if (result) {
+//                            FileUtil.updateMediaStore(activity, GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+//                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+                File filePath = new File(expression.getUrl());
+                Log.e("filepath", filePath.getAbsolutePath());
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.addFlags(
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                Uri imageUri = FileProvider.getUriForFile(
+                        activity,
+                        UIUtil.getContext().getPackageName() + ".fileprovider",
+                        filePath);
 
-                            ShareUtil.shareTimFriend("title", "content", ShareUtil.DRAWABLE, imageUri);
-                        }
-                    }
-                },activity).execute(expression);
+                ShareUtil.shareTimFriend("title", "content", ShareUtil.DRAWABLE, imageUri);
+//                        }
+//                    }
+//                }, activity).execute(expression);
             }
         });
 
         //调用QQ分享
         qqShare.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
-                    @Override
-                    public void onFinish(Boolean result) {
-                        if (result){
-                            FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            Log.e("filepath", filePath.getAbsolutePath());
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            Uri imageUri = FileProvider.getUriForFile(
-                                    activity,
-                                    UIUtil.getContext().getPackageName() + ".fileprovider",
-                                    filePath);
+            public void onClick(View v) {
+//                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
+//                    @Override
+//                    public void onFinish(Boolean result) {
+//                        if (result) {
+//                            FileUtil.updateMediaStore(activity, GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+//                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+                File filePath = new File(expression.getUrl());
+                Log.e("filepath", filePath.getAbsolutePath());
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.addFlags(
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                Uri imageUri = FileProvider.getUriForFile(
+                        activity,
+                        UIUtil.getContext().getPackageName() + ".fileprovider",
+                        filePath);
 
-                            ShareUtil.shareQQFriend("title", "content", ShareUtil.DRAWABLE, imageUri);
-                        }
-                    }
-                },activity).execute(expression);
+                ShareUtil.shareQQFriend("title", "content", ShareUtil.DRAWABLE, imageUri);
+//                        }
+//                    }
+//                }, activity).execute(expression);
             }
         });
 
@@ -393,38 +404,42 @@ public class ExpImageDialog extends MaterialDialog{
             @Override
             public void onClick(View v) {
 
-                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
-                    @Override
-                    public void onFinish(Boolean result) {
-                        if (result){
-                            FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                            Log.e("filepath", filePath.getAbsolutePath());
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            Uri imageUri = FileProvider.getUriForFile(
-                                    activity,
-                                    UIUtil.getContext().getPackageName() + ".fileprovider",
-                                    filePath);
+//                new SaveImageToGalleryTask(new SaveImageToGalleryListener() {
+//                    @Override
+//                    public void onFinish(Boolean result) {
+//                        if (result) {
+//                            FileUtil.updateMediaStore(activity, GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+//                            File filePath = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+                File filePath = new File(expression.getUrl());
+                Log.e("filepath", filePath.getAbsolutePath());
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.addFlags(
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                Uri imageUri = FileProvider.getUriForFile(
+                        activity,
+                        UIUtil.getContext().getPackageName() + ".fileprovider",
+                        filePath);
 
-                            ShareUtil.shareWeChatFriend("title","content",ShareUtil.DRAWABLE,imageUri);
-                        }
-                    }
-                },activity).execute(expression);
+                ShareUtil.shareWeChatFriend("title", "content", ShareUtil.DRAWABLE, imageUri);
+//                        }
+//                    }
+//                }, activity).execute(expression);
             }
         });
 
 
         //点击爱心
+        //TODO 改成可以收藏的
         love.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileUtil.updateMediaStore(activity,GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                ((ImageView)love).setImageDrawable(new IconicsDrawable(activity)
+//                FileUtil.updateMediaStore(activity, GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+                ((ImageView) love).setImageDrawable(new IconicsDrawable(activity)
                         .icon(GoogleMaterial.Icon.gmd_favorite)
                         .color(Color.RED)
                         .sizeDp(24));
-                int position = (int)(Math.random()*(loves.length - 1));
+                int position = (int) (Math.random() * (loves.length - 1));
                 ToastUtil.showMessageShort(loves[position]);
             }
         });
@@ -432,49 +447,7 @@ public class ExpImageDialog extends MaterialDialog{
         getAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                new GetExpImageTask(new GetExpImageListener() {
-                    @Override
-                    public void onFinish(Expression expression) {
-//                        final File tempFile = new File(GlobalConfig.appDirPath + expression.getName());
-//                        FileUtil.bytesSavedToFile(expression.getImage(),tempFile);
-
-//                        GeneralBasicParams param = new GeneralBasicParams();
-//                        param.setDetectDirection(true);
-//                        param.setImageFile(tempFile);
-                        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                                .progress(true, 0)
-                                .progressIndeterminateStyle(true)
-                                .show();
-//                        OCR.getInstance(activity).recognizeGeneralBasic(param, new OnResultListener<GeneralResult>() {
-//                            @Override
-//                            public void onResult(GeneralResult result) {
-//                                StringBuilder sb = new StringBuilder();
-//                                for (WordSimple wordSimple : result.getWordList()) {
-//                                    WordSimple word = wordSimple;
-//                                    sb.append(word.getWords());
-//                                    sb.append("\n");
-//                                }
-//                                if (sb.length()>1){
-//                                    sb.deleteCharAt(sb.length() - 1);
-//                                }
-//                                inputText.setText(sb);
-//                                dialog.dismiss();
-//                                tempFile.delete();
-//                            }
-//
-//                            @Override
-//                            public void onError(OCRError error) {
-//                                Toasty.error(activity,error.getMessage()).show();
-//                                dialog.dismiss();
-//                                ALog.d(error.getMessage());
-//                                tempFile.delete();
-//                            }
-//                        });
-                    }
-                }).execute(expression.getId());
-
-
+                new GetExpDesTask(activity,true).execute(expression);
             }
         });
 
@@ -488,10 +461,10 @@ public class ExpImageDialog extends MaterialDialog{
                         expression.setDescription(inputText.getText().toString());
                         expression.save();
                         //发个消息让首页更新数据，第一个数据是内容，第二个是表情包名称，第三个是当前弹框的位置，1表示在localdetail,2表示在首页
-                        EventBus.getDefault().post(new EventMessage(EventMessage.DESCRIPTION_SAVE,inputText.getText().toString(),expression.getFolderName(),String.valueOf(position)));
-                        Toasty.success(activity,"保存表情描述成功",Toast.LENGTH_SHORT).show();
+                        EventBus.getDefault().post(new EventMessage(EventMessage.DESCRIPTION_SAVE, inputText.getText().toString(), expression.getFolderName(), String.valueOf(position)));
+                        Toasty.success(activity, "保存表情描述成功", Toast.LENGTH_SHORT).show();
                     }
-                },true).execute(expression.getId());
+                }, true).execute(expression.getId());
 
             }
         });
@@ -501,10 +474,10 @@ public class ExpImageDialog extends MaterialDialog{
             @Override
             public void onClick(View v) {
                 File file = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                if (file.exists()){
+                if (file.exists()) {
                     //删除
                     file.delete();
-                    Toasty.success(activity,"删除成功").show();
+                    Toasty.success(activity, "删除成功").show();
                 }
             }
         });
@@ -521,7 +494,7 @@ public class ExpImageDialog extends MaterialDialog{
             super(context);
         }
 
-        public Builder setContext(Activity activity,Fragment fragment,int position){
+        public Builder setContext(Activity activity, Fragment fragment, int position) {
             this.activity = activity;
             this.fragment = fragment;
             this.position = position;

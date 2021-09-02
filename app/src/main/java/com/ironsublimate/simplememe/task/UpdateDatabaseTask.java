@@ -76,15 +76,13 @@ public class UpdateDatabaseTask  extends AsyncTask<Void, Integer, Boolean> {
                 }
 
                 //3. 地址修正，如果本地文件不存在，则url置为空，否则才置为本地路径
-                File local = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+                File local = new File(expression.getUrl());
                 if (!local.exists()){
                     expression.setUrl("");
-                }else {
-                    expression.setUrl(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
                 }
-                expression.save();
+                expression.delete();
+//                expression.save();
             }
-
             alCount++;
             publishProgress(alCount);
         }

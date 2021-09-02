@@ -20,7 +20,7 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
     private int count = 0;
     private boolean isRepeat;
 
-    GetExpDesTask(Activity activity, boolean isRepeat) {
+    public GetExpDesTask(Activity activity, boolean isRepeat) {
         this.activity = activity;
         this.isRepeat = isRepeat;
     }
@@ -34,8 +34,8 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
         final Expression expression = expressions[0];
 //        final File tempFile = new File(GlobalConfig.appTempDirPath + expression.getName());
 //        FileUtil.bytesSavedToFile(expression,tempFile);
-
-        if (expression.getDesStatus() == 0) {
+// 判断是不是识别过了弄到外面去，这里不用
+//        if (expression.getDesStatus() == 0) {
 //            GeneralBasicParams param = new GeneralBasicParams();
 //            param.setDetectDirection(true);
 //            param.setImageFile(tempFile);
@@ -72,10 +72,10 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
 //                    tempFile.delete();
 //                }
 //            });
-            expression.setDesStatus(1);
+//            expression.setDesStatus(1);
             expression.setDescription("");
             expression.save();
-        }
+//        }
         return null;
     }
 
