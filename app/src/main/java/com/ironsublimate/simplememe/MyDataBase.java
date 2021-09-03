@@ -34,14 +34,14 @@ public class MyDataBase {
      */
     public static boolean addExpressionRecord(Expression expression, File source) {
 
-        byte[] bytes = fileToCompressedBytes(source);
-        if (bytes == null) {
-            return false;
-        } else {
-            expression.setUrl(source.getAbsolutePath());
-            expression.setImage(bytes);
-            return addExpressionRecord(expression);
-        }
+//        byte[] bytes = fileToCompressedBytes(source);
+//        if (bytes == null) {
+//            return false;
+//        } else {
+        expression.setUrl(source.getAbsolutePath());
+//            expression.setImage(bytes);
+        return addExpressionRecord(expression);
+//        }
     }
 
     private static byte[] fileToCompressedBytes(File source) {

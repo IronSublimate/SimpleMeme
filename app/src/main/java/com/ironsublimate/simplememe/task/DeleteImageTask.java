@@ -30,7 +30,7 @@ import java.util.List;
  *     version: 1.0
  * </pre>
  */
-public class DeleteImageTask extends AsyncTask<Void,Void,Boolean>{
+public class DeleteImageTask extends AsyncTask<Void, Void, Boolean> {
     private boolean isSingleDir;//是删除整个目录还是删除目录的一些图片
     private List<Expression> expressionList;
     private List<Expression> originExpList;
@@ -41,7 +41,7 @@ public class DeleteImageTask extends AsyncTask<Void,Void,Boolean>{
     TaskListener listener;
 
     //给删除部分文件使用的构造器
-    public DeleteImageTask(boolean isSingleDir, List<Expression> originExpList, List<String> checkList,String folderName,Activity activity, TaskListener listener) {
+    public DeleteImageTask(boolean isSingleDir, List<Expression> originExpList, List<String> checkList, String folderName, Activity activity, TaskListener listener) {
         this.isSingleDir = isSingleDir;
         this.originExpList = originExpList;
         this.checkList = checkList;
@@ -52,7 +52,7 @@ public class DeleteImageTask extends AsyncTask<Void,Void,Boolean>{
     }
 
     //删除整个目录的构造器
-    public DeleteImageTask(boolean isSingleDir, String folderName,Activity activity, TaskListener listener) {
+    public DeleteImageTask(boolean isSingleDir, String folderName, Activity activity, TaskListener listener) {
         this.isSingleDir = isSingleDir;
         this.folderName = folderName;
         this.listener = listener;
@@ -69,15 +69,15 @@ public class DeleteImageTask extends AsyncTask<Void,Void,Boolean>{
 
     @Override
     protected Boolean doInBackground(Void... voids) {
-        if (isSingleDir){
+        if (isSingleDir) {
 
             //删除文件夹
             FileUtil.delFolder(GlobalConfig.appDirPath + folderName);
             //删除数据库的内容
-            LitePal.deleteAll(ExpressionFolder.class,"name = ?" ,folderName);
-            LitePal.deleteAll(Expression.class,"folderName = ?", folderName);
+            LitePal.deleteAll(ExpressionFolder.class, "name = ?", folderName);
+            LitePal.deleteAll(Expression.class, "folderName = ?", folderName);
 
-        }else {//删除部分文件
+        } else {//删除部分文件
             //组合中需要删除的文件list
             expressionList = new ArrayList<>();
             expressionList.clear();
@@ -91,16 +91,17 @@ public class DeleteImageTask extends AsyncTask<Void,Void,Boolean>{
                 expressionList.add(originExpList.get(Integer.parseInt(checkList.get(i))));
             }
 
-            for (int i =0;i<expressionList.size();i++){
+            for (int i = 0; i < expressionList.size(); i++) {
                 FileUtil.deleteImageFromGallery(expressionList.get(i).getUrl());
                 ALog.d("表情名称为" + expressionList.get(i).getName());
-                LitePal.deleteAll(Expression.class,"name = ? and foldername = ?",expressionList.get(i).getName(),expressionList.get(i).getFolderName());
+//                LitePal.deleteAll(Expression.class,"name = ? and foldername = ?",expressionList.get(i).getName(),expressionList.get(i).getFolderName());
+                LitePal.deleteAll(Expression.class, "id = ? ", expressionList.get(i).getId() + "");
                 //修改对应目录的数目
-                List<ExpressionFolder> tempExpFolders = LitePal.where("name = ? and exist = ?",folderName, String.valueOf(1)).find(ExpressionFolder.class,true);
+                List<ExpressionFolder> tempExpFolders = LitePal.where("name = ? and exist = ?", folderName, String.valueOf(1)).find(ExpressionFolder.class, true);
 
-                if (tempExpFolders.get(0).getCount() == 1){//如果删除该表情，目录为空，直接把目录删掉
+                if (tempExpFolders.get(0).getCount() == 1) {//如果删除该表情，目录为空，直接把目录删掉
 //                    tempExpFolders.get(0).delete();
-                }else {
+                } else {
                     tempExpFolders.get(0).setCount(tempExpFolders.get(0).getCount() - 1);
                     tempExpFolders.get(0).save();
                 }

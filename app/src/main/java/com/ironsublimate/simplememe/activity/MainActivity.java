@@ -670,7 +670,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             @Override
                             public void run() {
                                 try {
-                                    sleep(1500);
+//                                    sleep(1500);
+                                    sleep(0);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

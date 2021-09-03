@@ -50,7 +50,7 @@ public class GetExpListTask extends AsyncTask<String,Void,List<Expression>>{
                 expressionList = LitePal.select("id","foldername","status","url","desstatus","description").where("foldername = ?",name).find(Expression.class);
             }
 
-            sleep(800);
+//            sleep(800);
             return expressionList;
         }catch (Exception e){
             return new ArrayList<>();
