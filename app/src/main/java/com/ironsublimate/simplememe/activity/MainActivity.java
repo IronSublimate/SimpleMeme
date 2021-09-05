@@ -70,6 +70,7 @@ import com.ironsublimate.simplememe.task.GenerateScreenshotTask;
 import com.ironsublimate.simplememe.task.RecoverDataTask;
 import com.ironsublimate.simplememe.task.RemoveCacheTask;
 import com.ironsublimate.simplememe.task.GetExpFolderTask;
+import com.ironsublimate.simplememe.task.ScanAllIamgeTask;
 import com.ironsublimate.simplememe.util.APKVersionCodeUtils;
 import com.ironsublimate.simplememe.util.CheckPermissionUtils;
 import com.ironsublimate.simplememe.util.DataCleanManager;
@@ -199,6 +200,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         initTapView();
 
+        initDefaultFolder();
+
     }
 
 
@@ -262,9 +265,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 .withSelectedItem(-1)
                 .addDrawerItems(
                         new SecondaryDrawerItem().withName("我的主页").withIcon(GoogleMaterial.Icon.gmd_home).withSelectable(false),//1
-                        removeCache,//2
                         new SecondaryDrawerItem().withName("我的表情").withIcon(GoogleMaterial.Icon.gmd_photo_library).withSelectable(false),//3
-                        removeCache,//4
+                        new SecondaryDrawerItem().withName("扫描本机").withIcon(GoogleMaterial.Icon.gmd_scanner).withSelectable(false),//4
+                        removeCache,
                         new SecondaryDrawerItem().withName("备份数据").withIcon(GoogleMaterial.Icon.gmd_file_download).withSelectable(false),//5
                         new SecondaryDrawerItem().withName("恢复数据").withIcon(GoogleMaterial.Icon.gmd_backup).withSelectable(false),//6
                         new DividerDrawerItem(),//7
@@ -281,10 +284,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             case 1://我的首页，没卵用的一个按钮
                                 result.closeDrawer();
                                 break;
-                            case 2://进入表情商店
+                            case 3://全盘扫描
                                 //ShopActivity.actionStart(MainActivity.this);
+                                ScanAllIamgeTask task = new ScanAllIamgeTask(MainActivity.this);
+                                task.execute();
                                 break;
-                            case 3: //进入我的表情管理
+                            case 2: //进入我的表情管理
                                 MyActivity.actionStart(MainActivity.this);
                                 break;
                             case 4://清除缓存
@@ -920,6 +925,22 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         public boolean right() {
             Toasty.info(MainActivity.this,"点击顶部风车按钮切换图片文字哦").show();
             return super.right();
+        }
+    }
+
+    //建默认表情文件夹、收藏表情文件夹
+    private void initDefaultFolder(){
+        // Do something
+        for (String name:new String[]{this.getString(R.string.default_meme_folder),this.getString(R.string.favourite_meme_folder)}) {
+            List<ExpressionFolder> temExpFolderList = LitePal.where("name = ?", name).find(ExpressionFolder.class);
+            if (temExpFolderList.size() > 0) {
+
+            } else {
+                ExpressionFolder expressionFolder = new ExpressionFolder(1, 0, name, null, null, DateUtil.getNowDateStr(), null, null, -1);
+                expressionFolder.save();
+                UIUtil.autoBackUpWhenItIsNecessary();
+                EventBus.getDefault().post(new EventMessage(EventMessage.DATABASE));
+            }
         }
     }
 
