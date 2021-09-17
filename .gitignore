@@ -7,4 +7,6 @@
 /build
 /captures
 .externalNativeBuild
-
+/app/src/main/jni/ncnn*
+/app/src/main/jni/opencv*
+/app/release

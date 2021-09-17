@@ -444,6 +444,7 @@ public class ExpImageDialog extends MaterialDialog {
             }
         });
 
+        //点击自动识别
         getAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

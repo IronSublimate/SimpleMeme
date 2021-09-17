@@ -30,8 +30,8 @@ public class Expression extends LitePalSupport {
     private String folderName;//目录的名称
     private String description;//图片描述
     private int desStatus;//是否有图片描述，1为有，0为无
-    @Column(ignore = true)
-    private byte[] image = null;//图片内容，二进制存储
+//    @Column(ignore = true)
+//    private byte[] image = null;//图片内容，二进制存储
 //    @Column(ignore = true)
 //    static HashMap<Integer,byte[]> imageBuffer = new HashMap<Integer,byte[]>();
 
@@ -53,7 +53,7 @@ public class Expression extends LitePalSupport {
 //        this.name = name;
         this.url = url;
         this.folderName = folderName;
-        this.image = image;
+//        this.image = image;
     }
 
 
@@ -116,24 +116,24 @@ public class Expression extends LitePalSupport {
     }
 
     public byte[] getImage() {
-        if (this.image == null || this.image.length == 0) {
-//            if(imageBuffer.containsKey(this.id)){
-//                this.image = imageBuffer.get(this.id);
-//            } else {
-            this.image = FileUtil.fileToBytes(this.url);
-//                imageBuffer.put(this.id,this.image);
-//            }
-        }
-        return image;
+//        if (this.image == null || this.image.length == 0) {
+////            if(imageBuffer.containsKey(this.id)){
+////                this.image = imageBuffer.get(this.id);
+////            } else {
+//            this.image = FileUtil.fileToBytes(this.url);
+////                imageBuffer.put(this.id,this.image);
+////            }
+//        }
+        return FileUtil.fileToBytes(this.url);
     }
 
     public byte[] getImage(boolean is) {
-        LitePal.find(Expression.class, this.id).getImage();
-        return image;
+//        LitePal.find(Expression.class, this.id).getImage();
+        return FileUtil.fileToBytes(this.url);
     }
 
     public void setImage(byte[] image) {
-        this.image = image;
+//        this.image = image;
 //        imageBuffer.put(this.id,this.image);
     }
 }

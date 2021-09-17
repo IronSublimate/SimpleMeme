@@ -1,9 +1,14 @@
 package com.ironsublimate.simplememe.task;
 
 import android.app.Activity;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.ironsublimate.simplememe.bean.Expression;
+import com.ironsublimate.simplememe.ocr.PaddleOCRNcnn;
+import com.ironsublimate.simplememe.util.UIUtil;
 
 /**
  * <pre>
@@ -15,6 +20,14 @@ import com.ironsublimate.simplememe.bean.Expression;
  * </pre>
  */
 public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
+    private static final String TAG = "Detector";
+    private static PaddleOCRNcnn detector;
+
+    static {
+        detector = new PaddleOCRNcnn();
+        AssetManager assets = UIUtil.getContext().getAssets();
+        detector.Init(assets);
+    }
 
     private Activity activity;
     private int count = 0;
@@ -29,9 +42,32 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
         this.isRepeat = isRepeat;
     }
 
+    //Please check expression.getDesStatus() == 0 before call this function
+    static public boolean writeDescription(Expression expression){
+        Bitmap image = BitmapFactory.decodeFile(expression.getUrl());
+        PaddleOCRNcnn.Obj[] objs = detector.Detect(image, false);
+        StringBuilder sb = new StringBuilder();
+        for (PaddleOCRNcnn.Obj o : objs) {
+            sb.append(o.label);
+            sb.append('\n');
+//            Log.i(TAG,o.label);
+        }
+        if (sb.length() > 1) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        expression.setDesStatus(1);
+        expression.setDescription(sb.toString());
+        expression.save();
+        return true;
+    }
+
     @Override
     protected Void doInBackground(Expression... expressions) {
         final Expression expression = expressions[0];
+        writeDescription(expression);
+//        if (expression.getDesStatus() == 0) {
+
+//        }
 //        final File tempFile = new File(GlobalConfig.appTempDirPath + expression.getName());
 //        FileUtil.bytesSavedToFile(expression,tempFile);
 // 判断是不是识别过了弄到外面去，这里不用
@@ -73,10 +109,9 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
 //                }
 //            });
 //            expression.setDesStatus(1);
-            expression.setDescription("");
-            expression.save();
+//        expression.setDescription("");
+//        expression.save();
 //        }
         return null;
     }
-
 }

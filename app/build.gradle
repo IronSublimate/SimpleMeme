@@ -4,11 +4,20 @@ android {
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.ironsublimate.simplememe"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 26
-        versionCode 201808281
-        versionName "3.3"
+        versionCode 20210916
+        versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+        ndk {
+            moduleName "ncnn"
+            abiFilters "x86_64", "arm64-v8a"
+        }
     }
 
     signingConfigs {
@@ -16,7 +25,6 @@ android {
             v2SigningEnabled false
         }
     }
-
 
 
     buildTypes {
@@ -27,14 +35,14 @@ android {
     }
 
 
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'x86_64', 'armeabi-v8a'
-            universalApk true
-        }
-    }
+//    splits {
+//        abi {
+//            enable true
+//            reset()
+//            include 'x86_64', 'armeabi-v8a'
+//            universalApk true
+//        }
+//    }
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -43,6 +51,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/jni/CMakeLists.txt')
+        }
+    }
+
     buildToolsVersion '30.0.3'
     ndkVersion '23.0.7599858'
 
@@ -89,7 +103,8 @@ dependencies {
     //android图标
     implementation "com.mikepenz:iconics-core:3.0.3@aar"
     implementation "com.mikepenz:iconics-views:3.0.3@aar"
-    implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar' //Google Material Icons
+    implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
+    //Google Material Icons
 
     //dialog
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
@@ -144,7 +159,6 @@ dependencies {
 
     //引导
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.12.0'
-
 
 
 }
