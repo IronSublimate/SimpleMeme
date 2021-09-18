@@ -48,23 +48,23 @@
                 android:id="@+id/save_image"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                android:padding="10dp"
+                android:layout_alignParentLeft="true"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                app:iiv_icon="gmd_save"
+                android:padding="10dp"
                 app:iiv_color="@color/text_secondary_dark"
-                android:layout_alignParentLeft="true" />
+                app:iiv_icon="gmd_save" />
 
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/delete_image"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                android:padding="10dp"
+                android:layout_toRightOf="@id/save_image"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                app:iiv_icon="gmd_delete"
+                android:padding="10dp"
                 app:iiv_color="@color/text_secondary_dark"
-                android:layout_toRightOf="@id/save_image" />
+                app:iiv_icon="gmd_delete" />
 
             <LinearLayout
                 android:id="@+id/share_function"

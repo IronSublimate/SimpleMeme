@@ -97,7 +97,7 @@ public class MyDataBase {
         expressionFolder.setCount(expressionFolder.getCount() + 1);
 
         expressionFolder.save();
-        new GetExpDesTask(true).execute(expression);
+        new GetExpDesTask().execute(expression);
         return true;
     }
 

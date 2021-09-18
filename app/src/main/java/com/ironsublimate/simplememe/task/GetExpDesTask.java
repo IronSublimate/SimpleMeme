@@ -5,10 +5,20 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.ironsublimate.simplememe.bean.Expression;
 import com.ironsublimate.simplememe.ocr.PaddleOCRNcnn;
 import com.ironsublimate.simplememe.util.UIUtil;
+import com.ironsublimate.simplememe.view.ExpImageDialog;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * <pre>
@@ -19,9 +29,12 @@ import com.ironsublimate.simplememe.util.UIUtil;
  *     version: 1.0
  * </pre>
  */
-public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
+public class GetExpDesTask {
     private static final String TAG = "Detector";
     private static PaddleOCRNcnn detector;
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor(); // change according to your requirements;
+    private static final Handler handler = new Handler(Looper.getMainLooper());
+    private static final LinkedBlockingDeque<GetExpDesTask> queue = new LinkedBlockingDeque<GetExpDesTask>();
 
     static {
         detector = new PaddleOCRNcnn();
@@ -32,18 +45,45 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
     private Activity activity;
     private int count = 0;
     private boolean isRepeat;
+    private ExpImageDialog dialog = null;
+//    private Expression expression = null;
 
-    public GetExpDesTask(Activity activity, boolean isRepeat) {
-        this.activity = activity;
-        this.isRepeat = isRepeat;
+    //    public GetExpDesTask(Activity activity, boolean isRepeat) {
+//        this.activity = activity;
+//        this.isRepeat = isRepeat;
+//    }
+//
+//    public GetExpDesTask(boolean isRepeat) {
+//        this.isRepeat = isRepeat;
+//    }
+    public GetExpDesTask() {
     }
 
-    public GetExpDesTask(boolean isRepeat) {
-        this.isRepeat = isRepeat;
+    public GetExpDesTask(Callback callback) {
+        this.callback = callback;
+    }
+
+    public interface Callback {
+        void onComplete(String result);
+    }
+
+    Callback callback = null;
+
+    public Future<String> execute(Expression expression) {
+        Future<String> ret = executor.submit(() -> {
+            String s = writeDescription(expression);
+            if (this.callback != null) {
+                handler.post(() -> {
+                    callback.onComplete(s);
+                });
+            }
+            return s;
+        });
+        return ret;
     }
 
     //Please check expression.getDesStatus() == 0 before call this function
-    static public boolean writeDescription(Expression expression){
+    static public String writeDescription(Expression expression) {
         Bitmap image = BitmapFactory.decodeFile(expression.getUrl());
         PaddleOCRNcnn.Obj[] objs = detector.Detect(image, false);
         StringBuilder sb = new StringBuilder();
@@ -55,16 +95,17 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
         if (sb.length() > 1) {
             sb.deleteCharAt(sb.length() - 1);
         }
+        String s = sb.toString();
         expression.setDesStatus(1);
-        expression.setDescription(sb.toString());
+        expression.setDescription(s);
         expression.save();
-        return true;
+        return s;
     }
 
-    @Override
-    protected Void doInBackground(Expression... expressions) {
-        final Expression expression = expressions[0];
-        writeDescription(expression);
+//    @Override
+//    protected Void doInBackground(Expression... expressions) {
+//        final Expression expression = expressions[0];
+//        writeDescription(expression);
 //        if (expression.getDesStatus() == 0) {
 
 //        }
@@ -112,6 +153,13 @@ public class GetExpDesTask extends AsyncTask<Expression, Void, Void> {
 //        expression.setDescription("");
 //        expression.save();
 //        }
-        return null;
-    }
+//        return null;
+//    }
+
+    // 方法5：onCancelled()
+    // 作用：将异步任务设置为：取消状态
+//    @Override
+//    protected void onCancelled() {
+//        super.onCancelled();
+//    }
 }

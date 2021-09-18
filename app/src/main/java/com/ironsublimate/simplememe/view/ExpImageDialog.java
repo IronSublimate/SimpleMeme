@@ -43,6 +43,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import es.dmoral.toasty.Toasty;
 
@@ -448,7 +449,15 @@ public class ExpImageDialog extends MaterialDialog {
         getAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GetExpDesTask(activity,true).execute(expression);
+                saveToDatabase.setEnabled(false);
+                Future<String> stringFuture = new GetExpDesTask(new GetExpDesTask.Callback() {
+                    @Override
+                    public void onComplete(String result) {
+                        saveToDatabase.setEnabled(true);
+                        inputText.setText(result);
+                    }
+                }).execute(expression);
+
             }
         });
 
