@@ -1,13 +1,22 @@
 package com.ironsublimate.simplememe.task;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.ironsublimate.simplememe.R;
 import com.ironsublimate.simplememe.bean.Expression;
 import com.ironsublimate.simplememe.ocr.PaddleOCRNcnn;
 import com.ironsublimate.simplememe.util.UIUtil;
@@ -35,18 +44,32 @@ public class GetExpDesTask {
     private static final ExecutorService executor = Executors.newSingleThreadExecutor(); // change according to your requirements;
     private static final Handler handler = new Handler(Looper.getMainLooper());
     private static final LinkedBlockingDeque<GetExpDesTask> queue = new LinkedBlockingDeque<GetExpDesTask>();
+    //    private static final NotificationManager notificationManager = (NotificationManager) UIUtil.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+    private static final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(UIUtil.getContext());
+
+    private static final int notificationID = 2333;
+    private static final String notificationChannelName = "channel_get_description";
+    private static final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(UIUtil.getContext(), Integer.toString(notificationID));
+
 
     static {
         detector = new PaddleOCRNcnn();
         AssetManager assets = UIUtil.getContext().getAssets();
         detector.Init(assets);
+        NotificationChannel channel = new NotificationChannel(Integer.toString(notificationID), notificationChannelName, NotificationManager.IMPORTANCE_DEFAULT);
+        notificationManager.createNotificationChannel(channel);
+
     }
 
     private Activity activity;
     private int count = 0;
     private boolean isRepeat;
     private ExpImageDialog dialog = null;
+    private Notification notification = null;
 //    private Expression expression = null;
+
+    private volatile int taskCount = 0;
+    private volatile int taskCurrent = 0;
 
     //    public GetExpDesTask(Activity activity, boolean isRepeat) {
 //        this.activity = activity;
@@ -70,20 +93,53 @@ public class GetExpDesTask {
     Callback callback = null;
 
     public Future<String> execute(Expression expression) {
+//        queue.add(expression);
+        int n = queue.size();
+        if (n == 1) {
+//Set notification information:
+//            notificationBuilder = new Notification.Builder(UIUtil.getContext());
+            notificationBuilder.setOngoing(true)
+                    .setContentTitle("Notification Content Title")
+                    .setContentText("Notification Content Text")
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setProgress(n, 0, false);
+        } else {
+            taskCount++;
+            notificationBuilder.setProgress(n, taskCurrent, false);
+        }
+
+//        handler.post(() -> {
+        //Send the notification:
+        notificationManager.notify(notificationID, notificationBuilder.build());
+//        });
+
         Future<String> ret = executor.submit(() -> {
-            String s = writeDescription(expression);
-            if (this.callback != null) {
-                handler.post(() -> {
-                    callback.onComplete(s);
-                });
+            Thread.sleep(500);
+            String s = "";
+//            String s = writeDescription(expression);
+            taskCurrent++;
+            if (taskCount == taskCurrent) {
+                taskCount = 0;
+                taskCurrent = 0;
+                notificationManager.cancel(notificationID);
+            } else {
+                notificationBuilder.setProgress(taskCount, taskCurrent, false);
+                notificationManager.notify(notificationID, notificationBuilder.build());
             }
+            handler.post(() -> {
+
+                if (this.callback != null) {
+                    callback.onComplete(s);
+                }
+            });
+
             return s;
         });
         return ret;
     }
 
     //Please check expression.getDesStatus() == 0 before call this function
-    static public String writeDescription(Expression expression) {
+    static private String writeDescription(Expression expression) {
         Bitmap image = BitmapFactory.decodeFile(expression.getUrl());
         PaddleOCRNcnn.Obj[] objs = detector.Detect(image, false);
         StringBuilder sb = new StringBuilder();
@@ -163,3 +219,4 @@ public class GetExpDesTask {
 //        super.onCancelled();
 //    }
 }
+

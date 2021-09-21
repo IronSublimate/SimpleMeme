@@ -72,8 +72,8 @@ public class UpdateDatabaseTask  extends AsyncTask<Void, Integer, Boolean> {
             }else {
                 //2. 没有表情描述，自动识别文字
                 if (expression.getDesStatus() == 0){
-//                    new GetExpDesTask(activity,true).execute(expression);
-                    GetExpDesTask.writeDescription(expression);
+                    new GetExpDesTask().execute(expression);
+//                    GetExpDesTask.writeDescription(expression);
                 }
 
                 //3. 地址修正，如果本地文件不存在，则url置为空，否则才置为本地路径
