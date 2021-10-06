@@ -450,7 +450,7 @@ public class ExpImageDialog extends MaterialDialog {
             @Override
             public void onClick(View v) {
                 saveToDatabase.setEnabled(false);
-                Future<String> stringFuture = new GetExpDesTask(new GetExpDesTask.Callback() {
+                new GetExpDesTask(new GetExpDesTask.Callback() {
                     @Override
                     public void onComplete(String result) {
                         saveToDatabase.setEnabled(true);
