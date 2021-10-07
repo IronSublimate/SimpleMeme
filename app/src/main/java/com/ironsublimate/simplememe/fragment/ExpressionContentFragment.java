@@ -189,7 +189,7 @@ public class ExpressionContentFragment extends Fragment {
         if (Objects.equals(eventBusMessage.getType(), EventMessage.LOCAL_DESCRIPTION_SAVE)) {
             if (Objects.equals(eventBusMessage.getMessage2(), tabName)) {
                 ALog.d("当前位置" + currentPosition);
-                if(eventBusMessage.getMessage3()!=null || eventBusMessage.getMessage3()!=""){
+                if(eventBusMessage.getMessage3()!=null && !eventBusMessage.getMessage3().equals("")){
                     currentPosition = Integer.parseInt(eventBusMessage.getMessage3());
                 }
                 View view = gridLayoutManager.findViewByPosition(currentPosition).findViewById(R.id.notice);

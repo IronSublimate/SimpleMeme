@@ -60,13 +60,6 @@ public class GetExpDesTask {
 
     }
 
-    private Activity activity;
-    private int count = 0;
-    private boolean isRepeat;
-    private ExpImageDialog dialog = null;
-    private Notification notification = null;
-//    private Expression expression = null;
-
     private volatile static int taskCount = 0;
     private volatile static int taskCurrent = 0;
 
@@ -83,6 +76,7 @@ public class GetExpDesTask {
         NotificationChannel channel = new NotificationChannel(Integer.toString(notificationID), notificationChannelName, NotificationManager.IMPORTANCE_DEFAULT);
         notificationManager.createNotificationChannel(channel);
         notificationBuilder.setOngoing(true)
+                .setNotificationSilent()
                 .setContentTitle("识别文字中")
                 .setContentText("0/0")
                 .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -100,13 +94,13 @@ public class GetExpDesTask {
             taskCount++;
         }
         executor.submit(() -> {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            String s = "";
-//            String s = writeDescription(expression);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            String s = "";
+            String s = writeDescription(expression);
             synchronized (GetExpDesTask.class) {
                 taskCurrent++;
                 if (taskCurrent == taskCount) {
@@ -115,6 +109,7 @@ public class GetExpDesTask {
                     notificationManager.cancel(notificationID);
                 } else {
                     notificationBuilder
+//                            .setContentTitle("识别文字中")
                             .setContentText(taskCurrent + "/" + taskCount)
                             .setProgress(taskCount, taskCurrent, false);
                     notificationManager.notify(notificationID, notificationBuilder.build());

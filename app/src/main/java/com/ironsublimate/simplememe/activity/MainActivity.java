@@ -12,18 +12,24 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -325,7 +331,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                             @Override
                                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                                 FileUtil.copyFileToTarget(MainActivity.this.getDatabasePath("expBaby.db").getAbsolutePath(), GlobalConfig.appDirPath + "database/" + DateUtil.getNowDateStr() + ".db");
-                                                Toasty.info(MainActivity.this,"备份数据成功",Toast.LENGTH_SHORT).show();
+                                                Toasty.info(MainActivity.this, "备份数据成功", Toast.LENGTH_SHORT).show();
                                             }
                                         })
                                         .show();
@@ -394,8 +400,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
      * 初始化TabLayout 数据
      */
     private void initTabLayout() {
-        List<Fragment>fragments = new ArrayList<>();
-        fragments.add(ExpressionContentFragment.fragmentInstant("默认",true,0));
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(ExpressionContentFragment.fragmentInstant("默认", true, 0));
         List<String> pageTitleList = new ArrayList<>();
         pageTitleList.add("默认");
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, pageTitleList);
@@ -410,13 +416,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         bindTabWithViewPager();
     }
 
-    private void bindTabWithViewPager(){
+    private void bindTabWithViewPager() {
         //tabLayout绑定
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         viewPager.setOffscreenPageLimit(1);//参数为预加载数量，系统最小值为1。慎用！预加载数量过多低端机子受不了
     }
-
 
 
     /**
@@ -439,7 +444,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }).execute();
 
     }
-
 
 
     /**
@@ -466,11 +470,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-    private void initTapView(){
+    private void initTapView() {
         if (MySharePreference.getUserUsedStatus("isFirstEnter") == 0) {
             toolbar.inflateMenu(R.menu.menu_main);
             new TapTargetSequence(this)
-                    .targets(TapTarget.forToolbarMenuItem(toolbar,R.id.refresh,"来自 一个・one","点击刷新，每天早6点自动更新来自one接口的数据\n\n如果喜欢可以分享给别人")
+                    .targets(TapTarget.forToolbarMenuItem(toolbar, R.id.refresh, "来自 一个・one", "点击刷新，每天早6点自动更新来自one接口的数据\n\n如果喜欢可以分享给别人")
                                     .cancelable(false)
                                     .drawShadow(true)
                                     .titleTextColor(R.color.text_primary_dark)
@@ -480,12 +484,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                     .id(1),
 
                             TapTarget.forView(findViewById(R.id.fab_search), "搜索让一切变得有规律", "这里，你可以搜索你的本地所有表情包\n\n当然你必须给表情包填写相应的描述")
-                            .textTypeface(Typeface.SANS_SERIF) //指定字体
-                            .drawShadow(true).cancelable(false).tintTarget(true)//
-                            .icon(getResources().getDrawable(R.drawable.ic_search_black_24dp))//指定target图标
-                            .targetCircleColor(android.R.color.black)//内圈的颜色
-                            .titleTextColor(R.color.text_primary_dark)
-                            .descriptionTextColor(R.color.text_secondary_dark).id(2),
+                                    .textTypeface(Typeface.SANS_SERIF) //指定字体
+                                    .drawShadow(true).cancelable(false).tintTarget(true)//
+                                    .icon(getResources().getDrawable(R.drawable.ic_search_black_24dp))//指定target图标
+                                    .targetCircleColor(android.R.color.black)//内圈的颜色
+                                    .titleTextColor(R.color.text_primary_dark)
+                                    .descriptionTextColor(R.color.text_secondary_dark).id(2),
 
                             TapTarget.forView(findViewById(R.id.add_exp), "丰富的表情商店", "进入这里，你可以下载你需要的表情包\n\n你可以选择下载部分或者下载全套")
                                     .textTypeface(Typeface.SANS_SERIF) //指定字体
@@ -497,7 +501,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                     .titleTextColor(R.color.text_primary_dark)
                                     .descriptionTextColor(R.color.text_secondary_dark).id(3)
 
-                            )
+                    )
                     .listener(new TapTargetSequence.Listener() {
                         @Override
                         public void onSequenceFinish() {
@@ -506,7 +510,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
                         @Override
                         public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-                            switch (lastTarget.id()){
+                            switch (lastTarget.id()) {
                                 case 1:
                                     getOne(refreshItem);
                                     break;
@@ -537,15 +541,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSearching){
-                    if (Objects.equals(searchInput.getText().toString(), "")){
+                if (isSearching) {
+                    if (Objects.equals(searchInput.getText().toString(), "")) {
                         isSearching = false;
                         searchInput.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         ResultActivity.actionStart(MainActivity.this, searchInput.getText().toString());
                     }
 
-                }else {
+                } else {
                     searchInput.setVisibility(View.VISIBLE);
                     isSearching = true;
                 }
@@ -603,7 +607,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-
     private void updateData() {
         expressionFolderList = LitePal.findAll(ExpressionFolder.class, true);
     }
@@ -611,6 +614,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     /**
      * 获取首页一个内容
+     *
      * @param item
      */
     private void getOne(MenuItem item) {
@@ -658,6 +662,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     /**
      * 显示一个内容界面
+     *
      * @param oneDetailLists
      */
     private void setOneUI(final OneDetailList oneDetailLists) {
@@ -704,15 +709,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 //生成截图
                 final Expression expression = new Expression(3, oneDetailLists.getDate().substring(0, 10) + (currentItem) + ".jpg", oneDetailList.get(currentItem).getImgUrl(), "头图");
                 final ExpImageDialog expImageDialog = new ExpImageDialog.Builder(MainActivity.this)
-                        .setContext(MainActivity.this, null,3)
+                        .setContext(MainActivity.this, null, 3)
                         .build();
                 expImageDialog.setImageData(expression);
 
                 //判断是否已经生成过了
                 File file = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                if (file.exists()){
+                if (file.exists()) {
                     expImageDialog.show();
-                }else {
+                } else {
                     new GenerateScreenshotTask(MainActivity.this, oneText.getText().toString(), expression, new TaskListener() {
                         @Override
                         public void onFinish(Object result) {
@@ -727,6 +732,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     /**
      * 显示风车动画
+     *
      * @param item
      */
     public void showRefreshAnimation(MenuItem item) {
@@ -775,7 +781,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override
@@ -831,8 +836,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-
-
     @Override
     public void onBackPressed() {
 
@@ -854,7 +857,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             }
         }
     }
-
 
 
     @Override
@@ -886,20 +888,20 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         ALog.d("什么情况？" + file.getAbsolutePath());
         ALog.d(file.getParentFile().getAbsolutePath() + "|" + GlobalConfig.appDirPath + "database");
         boolean isExist = false;//备份文件是否已经存在在备份列表了
-        if (Objects.equals(file.getParentFile().getAbsolutePath(), GlobalConfig.appDirPath + "database")){
-            if (file.exists()){
+        if (Objects.equals(file.getParentFile().getAbsolutePath(), GlobalConfig.appDirPath + "database")) {
+            if (file.exists()) {
                 isExist = true;
                 ALog.d("已经存在的文件了");
             }
         }
-        if (!isExist){
-            FileUtil.copyFileToTarget(file.getAbsolutePath(),GlobalConfig.appDirPath+"database" + "/" + file.getName());
+        if (!isExist) {
+            FileUtil.copyFileToTarget(file.getAbsolutePath(), GlobalConfig.appDirPath + "database" + "/" + file.getName());
         }
 
-        ALog.d("AAA" + GlobalConfig.appDirPath+"database" + "/" + file.getName());
-        FileUtil.copyFileToTarget(GlobalConfig.appDirPath+"database" + "/" + file.getName(),this.getDatabasePath("expBaby.db").getAbsolutePath());
+        ALog.d("AAA" + GlobalConfig.appDirPath + "database" + "/" + file.getName());
+        FileUtil.copyFileToTarget(GlobalConfig.appDirPath + "database" + "/" + file.getName(), this.getDatabasePath("expBaby.db").getAbsolutePath());
         EventBus.getDefault().post(new EventMessage(EventMessage.DATABASE));
-        Toasty.success(this,"导入备份成功").show();
+        Toasty.success(this, "导入备份成功").show();
     }
 
     @Override
@@ -917,21 +919,21 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         @Override
         public boolean left() {
-            Toasty.info(MainActivity.this,"点击顶部风车按钮切换图片文字哦").show();
+            Toasty.info(MainActivity.this, "点击顶部风车按钮切换图片文字哦").show();
             return super.left();
         }
 
         @Override
         public boolean right() {
-            Toasty.info(MainActivity.this,"点击顶部风车按钮切换图片文字哦").show();
+            Toasty.info(MainActivity.this, "点击顶部风车按钮切换图片文字哦").show();
             return super.right();
         }
     }
 
     //建默认表情文件夹、收藏表情文件夹
-    private void initDefaultFolder(){
+    private void initDefaultFolder() {
         // Do something
-        for (String name:new String[]{this.getString(R.string.default_meme_folder),this.getString(R.string.favourite_meme_folder)}) {
+        for (String name : new String[]{this.getString(R.string.default_meme_folder), this.getString(R.string.favourite_meme_folder)}) {
             List<ExpressionFolder> temExpFolderList = LitePal.where("name = ?", name).find(ExpressionFolder.class);
             if (temExpFolderList.size() > 0) {
 
