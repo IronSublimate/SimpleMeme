@@ -1,34 +1,29 @@
 package com.ironsublimate.simplememe.task;
 
-import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.ironsublimate.simplememe.R;
+import com.ironsublimate.simplememe.activity.MainActivity;
 import com.ironsublimate.simplememe.bean.Expression;
 import com.ironsublimate.simplememe.ocr.PaddleOCRNcnn;
 import com.ironsublimate.simplememe.util.UIUtil;
-import com.ironsublimate.simplememe.view.ExpImageDialog;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <pre>
@@ -49,9 +44,10 @@ public class GetExpDesTask {
     private final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(UIUtil.getContext());
 
     private static final int notificationID = 2333;
+    private static final int serviceID = 2333;
     private static final String notificationChannelName = "channel_get_description";
-    private final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(UIUtil.getContext(), Integer.toString(notificationID));
-
+    private static final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(UIUtil.getContext(), Integer.toString(notificationID));
+    private final GetExpService service = new GetExpService();
 
     static {
         detector = new PaddleOCRNcnn();
@@ -75,12 +71,15 @@ public class GetExpDesTask {
     private void init() {
         NotificationChannel channel = new NotificationChannel(Integer.toString(notificationID), notificationChannelName, NotificationManager.IMPORTANCE_DEFAULT);
         notificationManager.createNotificationChannel(channel);
-        notificationBuilder.setOngoing(true)
-                .setNotificationSilent()
-                .setContentTitle("识别文字中")
-                .setContentText("0/0")
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setProgress(0, 0, false);
+//        new NotificationCompat.Builder(UIUtil.getContext(), Integer.toString(notificationID);
+//        notificationBuilder.setOngoing(true)
+//                .setNotificationSilent()
+//                .setContentTitle("识别文字中")
+//                .setContentText("0/0")
+//                .setSmallIcon(R.mipmap.ic_launcher_round)
+//                .setProgress(0, 0, false);
+
+
     }
 
     public interface Callback {
@@ -92,6 +91,11 @@ public class GetExpDesTask {
     public void execute(Expression expression) {
         synchronized (GetExpDesTask.class) {
             taskCount++;
+            if (taskCount == 1) {
+                Context context = UIUtil.getContext();
+                Intent intent = new Intent(context, GetExpService.class);
+                context.startService(intent);
+            }
         }
         executor.submit(() -> {
 //            try {
@@ -107,6 +111,9 @@ public class GetExpDesTask {
                     taskCount = 0;
                     taskCurrent = 0;
                     notificationManager.cancel(notificationID);
+                    Context context = UIUtil.getContext();
+                    Intent intent = new Intent(context, GetExpService.class);
+                    context.stopService(intent);
                 } else {
                     notificationBuilder
 //                            .setContentTitle("识别文字中")
@@ -142,6 +149,44 @@ public class GetExpDesTask {
         expression.setDescription(s);
         expression.save();
         return s;
+    }
+
+    public static class GetExpService extends Service {
+        public GetExpService() {
+        }
+
+        @Override
+        public IBinder onBind(Intent intent) {
+            // TODO: Return the communication channel to the service.
+            return null;
+        }
+
+        @Override
+        public int onStartCommand(Intent intent, int flags, int startId) {
+            startForeground();
+            return super.onStartCommand(intent, flags, startId);
+        }
+
+        private void startForeground() {
+            Intent notificationIntent = new Intent(this, MainActivity.class);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                    notificationIntent, 0);
+            this.startForeground(notificationID, notificationBuilder
+                    .setOngoing(true)
+                    .setNotificationSilent()
+                    .setContentTitle("识别文字中")
+                    .setContentText("0/0")
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setProgress(0, 0, false)
+                    .setContentIntent(pendingIntent)
+                    .build());
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+        }
     }
 }
 

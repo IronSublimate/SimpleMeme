@@ -18,6 +18,7 @@ import java.util.Objects;
 /**
  * <pre>
  *     author : hewro
+ *     modify : IronSublimate
  *     e-mail : ihewro@163.com
  *     time   : 2018/07/04
  *     desc   : 使用sqlite数据库去管理本地的表情包信息，这样速度更快，操作更简单。
@@ -78,26 +79,31 @@ public class MyDataBase {
             if (expressionList.size() > 0) {//有该表情的信息，就修改一下表情的文件内容即可
                 expression = expressionList.get(0);
                 //saveExpImage(expression, expression.getImage(), false);
+                //没描述信息就天添加描述信息
+                if(expression.getDesStatus()==0) {
+                    new GetExpDesTask().execute(expression);
+                }
                 return true;
             }
             ALog.d("目录存在，但是表情不存在");
+            expression.save();
+            return true;
         } else if (expressionFolderList.size() <= 0) {//没有该目录信息
             expressionFolder = new ExpressionFolder(1, 0, expression.getFolderName(), null, null, DateUtil.getNowDateStr(), null, new ArrayList<Expression>(), -1);
             expressionFolder.save();
             ALog.d("目录和表情都没有的");
+            expressionFolder.setCount(expressionFolder.getCount() + 1);
+            expressionFolder.save();
+            new GetExpDesTask().execute(expression);
+            return true;
         } else {
             return false;//这种错误几乎不会发生，除非数据库的错误严重错乱
         }
         //3. 把表情的信息存储进去,执行这里的时候有两种情况，一种是目录和表情都没有的。一种目录存在，但是表情不存在。
 //        currentExpression = new Expression(1,expression.getName(),GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName(),expression.getFolderName());
 //        currentExpression = new Expression(1, expression.getName(), url, expression.getFolderName());
-        expression.save();
-        //saveExpImage(currentExpression, source, false);
 
-        expressionFolder.setCount(expressionFolder.getCount() + 1);
-        expressionFolder.save();
-        new GetExpDesTask().execute(expression);
-        return true;
+        //saveExpImage(currentExpression, source, false);
     }
 
     /**
