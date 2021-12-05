@@ -1,6 +1,6 @@
 # Simple Meme
-## KISS:Keep It Simple Stupid
-Too Young, Too Simple, Sometimes Naive
+## KISS: Keep It Simple Stupid
+Too Young, Too Simple, Sometimes Naive  
 [简体中文](./README-zh_CN.md)
 
 ---
