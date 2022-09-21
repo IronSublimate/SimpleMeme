@@ -1,11 +1,12 @@
 # 小表情 
-## 保持简单
-太年轻，太简单，有时还很幼稚
-[English](./README.md)
+[English](./README.md)  
+你是否有很多表情包？    
+你是否曾经想起了表情包中的文字但是找不到表情包在哪了？  
+现在使用[小表情](https://github.com/IronSublimate/SimpleMeme)来管理你的表情包吧！
 
 ---
 > 作者：侯宇轩
-> [代码地址](https://github.com/ihewro/Android_Expression_Package)
+> [代码地址](https://github.com/IronSublimate/SimpleMeme)
 ---
 ## 简介
 使用[ncnn](https://github.com/Tencent/ncnn)自动识别表情包文字，根据表情包文字搜索，表情包分类管理应用
