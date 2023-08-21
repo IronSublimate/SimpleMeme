@@ -124,13 +124,13 @@ public class ExpImageDialog extends MaterialDialog {
     private void updateUI() {
         if (expression.getStatus() == 1) {//本地图片，显示图片识别框
             inputView.setVisibility(View.VISIBLE);
-            if (new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName()).exists()) {
-                delete.setVisibility(View.VISIBLE);
-                save.setVisibility(View.GONE);
-            } else {
-                save.setVisibility(View.VISIBLE);
-                delete.setVisibility(View.GONE);
-            }
+//            if (new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName()).exists()) {
+//                delete.setVisibility(View.VISIBLE);
+//                save.setVisibility(View.GONE);
+//            } else {
+//                save.setVisibility(View.VISIBLE);
+//                delete.setVisibility(View.GONE);
+//            }
             if (expression.getDesStatus() == 1) {
                 inputText.setText(expression.getDescription());
             } else {
@@ -484,11 +484,14 @@ public class ExpImageDialog extends MaterialDialog {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File file = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+                File file = new File(expression.getUrl() );
                 if (file.exists()) {
                     //删除
-                    file.delete();
-                    Toasty.success(activity, "删除成功").show();
+                    if (file.delete()) {
+                        Toasty.success(activity, "删除成功").show();
+                    } else {
+                        Toasty.info(activity, "删除失败").show();
+                    }
                 }
             }
         });

@@ -20,6 +20,7 @@
             android:paddingRight="24dp"
             android:paddingBottom="8dp"
             android:text="标题而已"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -38,87 +39,87 @@
 
         <!--图片的工具菜单栏-->
         <RelativeLayout
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:paddingBottom="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp">
 
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/save_image"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="@dimen/item_show_share_icon_size"
+                android:layout_height="@dimen/item_show_share_icon_size"
                 android:layout_alignParentLeft="true"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:padding="10dp"
+                android:padding="@dimen/item_show_share_icon_padding"
                 app:iiv_color="@color/text_secondary_dark"
                 app:iiv_icon="gmd_save" />
 
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/delete_image"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="@dimen/item_show_share_icon_size"
+                android:layout_height="@dimen/item_show_share_icon_size"
                 android:layout_toRightOf="@id/save_image"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:padding="10dp"
+                android:padding="@dimen/item_show_share_icon_padding"
                 app:iiv_color="@color/text_secondary_dark"
                 app:iiv_icon="gmd_delete" />
 
             <LinearLayout
                 android:id="@+id/share_function"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_height="@dimen/item_show_share_icon_size"
                 android:layout_alignParentRight="true"
                 android:orientation="horizontal">
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/share"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:padding="10dp"
+                    android:layout_width="@dimen/item_show_share_icon_size"
+                    android:layout_height="@dimen/item_show_share_icon_size"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
+                    android:padding="@dimen/item_show_share_icon_padding"
                     app:iiv_color="@color/text_secondary_dark"
-                    app:iiv_icon="gmd_share"/>
+                    app:iiv_icon="gmd_share" />
 
 
                 <ImageView
                     android:id="@+id/weChat_share"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:padding="10dp"
-                    android:src="@drawable/wechat"
+                    android:layout_width="@dimen/item_show_share_icon_size"
+                    android:layout_height="@dimen/item_show_share_icon_size"
                     android:background="?attr/selectableItemBackground"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:padding="@dimen/item_show_share_icon_padding"
+                    android:src="@drawable/wechat" />
 
                 <ImageView
                     android:id="@+id/qq_share"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:padding="10dp"
+                    android:layout_width="@dimen/item_show_share_icon_size"
+                    android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/qq"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:padding="@dimen/item_show_share_icon_padding"
+                    android:src="@drawable/qq" />
 
                 <ImageView
                     android:id="@+id/tim_share"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:padding="10dp"
+                    android:layout_width="@dimen/item_show_share_icon_size"
+                    android:layout_height="@dimen/item_show_share_icon_size"
                     android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/tim"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:padding="@dimen/item_show_share_icon_padding"
+                    android:src="@drawable/tim" />
 
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/love"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:padding="10dp"
+                    android:layout_width="@dimen/item_show_share_icon_size"
+                    android:layout_height="@dimen/item_show_share_icon_size"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
+                    android:padding="@dimen/item_show_share_icon_padding"
                     app:iiv_color="@color/text_secondary_dark"
                     app:iiv_icon="gmd-favorite" />
             </LinearLayout>
@@ -143,18 +144,19 @@
                 android:id="@+id/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:layout_marginTop="4dp"
-                android:inputType="textMultiLine"
-                android:layout_marginRight="120dp"
+                android:layout_marginEnd="120dp"
                 android:hint="输入图片描述，用于搜索"
-                android:textSize="14sp"
-                android:textColor="#000000"/>
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:maxLines="4"
+                android:scrollbars="vertical"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">
 

@@ -45,13 +45,9 @@ public class AboutActivity extends AppCompatActivity {
 
     private boolean isPlayed = false;
 
-    private MediaPlayer mMediaPlayer; // 声明播放器
-
     public static void actionStart(Activity activity) {
         Intent intent = new Intent(activity, AboutActivity.class);
         activity.startActivity(intent);
-
-
     }
 
     @Override
@@ -61,72 +57,10 @@ public class AboutActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         textView2.setText("v" + APKVersionCodeUtils.getVerName(this));
-
-        mMediaPlayer = new MediaPlayer();
-
-
-        initListener();
-
-
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (lastClickTime == -1) {
-                    lastClickTime = System.currentTimeMillis();
-                    thisClickTime = System.currentTimeMillis();
-                } else {
-                    thisClickTime = System.currentTimeMillis();
-                    if (thisClickTime - lastClickTime < 500) {//是在0.8秒内点击的
-                        lastClickTime = thisClickTime;
-                        clickTimes++;
-
-                        if (clickTimes > 3 && !isPlayed){
-                            isPlayed = true;
-                            Toasty.info(AboutActivity.this,"准备为您播放彩蛋音乐", Toast.LENGTH_LONG).show();
-                            Animation rotateAnimation = AnimationUtils.loadAnimation(AboutActivity.this, R.anim.rotate);
-                            imageView.setAnimation(rotateAnimation);
-                            imageView.startAnimation(rotateAnimation);
-                            String dataSource = "https://www.ihewro.com/little.mp3";
-                            ALog.d("播放地址为" + dataSource);
-
-                            try {
-                                mMediaPlayer.reset();
-                                // 播放器绑定资源
-                                mMediaPlayer.setDataSource(dataSource);
-                                // 播放器准备,开启了子线程，准备好了会回调函数
-                                mMediaPlayer.prepareAsync();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }else if (isPlayed){
-                            //Toasty.info(AboutActivity.this,"已经为你播放过啦~",Toast.LENGTH_LONG).show();
-                        }
-                    }else {
-                        lastClickTime = -1;
-                        thisClickTime = -1;
-                        clickTimes = 0;
-                    }
-                }
-            }
-        });
-    }
-
-    private void initListener(){
-        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                ALog.d("播放器已经准备好");
-                // 播放
-                mMediaPlayer.start();
-            }
-        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMediaPlayer.stop();
-        mMediaPlayer.release();
     }
 }
