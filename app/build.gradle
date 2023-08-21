@@ -21,6 +21,9 @@ android {
     }
 
     signingConfigs {
+        debug{
+            v2SigningEnabled false
+        }
         release {
             v2SigningEnabled false
         }
