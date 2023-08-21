@@ -1,11 +1,12 @@
 # Simple Meme
-## KISS: Keep It Simple Stupid
-Too Young, Too Simple, Sometimes Naive  
-[简体中文](./README-zh_CN.md)
+[简体中文](./README-zh_CN.md)  
+Do you have lots of memes in your phone?  
+Did you remember some key words of meme but can't find where ths picture is?  
+Now using [SimpleMeme](https://github.com/IronSublimate/SimpleMeme) to manage your memes!
 
 ---
 > Author: Hou Yuxuan
-> [Source Code](https://github.com/ihewro/Android_Expression_Package)
+> [Source Code](https://github.com/IronSublimate/SimpleMeme)
 ---
 ## Introduction
 Using [ncnn](https://github.com/Tencent/ncnn) and recognizing characters automatically, searching memes by the characters, classifying memes

@@ -1,11 +1,12 @@
 # 小表情 
-## 保持简单
-太年轻，太简单，有时还很幼稚  
-[English](./README.md)
+[English](./README.md)  
+你是否有很多表情包？    
+你是否曾经想起了表情包中的文字但是找不到表情包在哪了？  
+现在使用[小表情](https://github.com/IronSublimate/SimpleMeme)来管理你的表情包吧！
 
 ---
 > 作者：侯宇轩
-> [代码地址](https://github.com/ihewro/Android_Expression_Package)
+> [代码地址](https://github.com/IronSublimate/SimpleMeme)
 ---
 ## 简介
 使用[ncnn](https://github.com/Tencent/ncnn)自动识别表情包文字，根据表情包文字搜索，表情包分类管理应用
@@ -27,8 +28,4 @@
 * [ ] 全局扫描图片的时候不会扫描已经保存的图片
 * [ ] 点击♥添加图片到我的收藏
 * [ ] 修复扫描图片后有的表情描述没有更新
-* [ ] 应用进入后台后继续识别文字，线程保活
-* [ ] 反复打开图片对话框图片会变小
-* [ ] 移除打开图片后没用的保存按钮
-* [ ] 识别文字完成后通知栏应该消失
 * [ ] 扫描时删除不存在的图像
