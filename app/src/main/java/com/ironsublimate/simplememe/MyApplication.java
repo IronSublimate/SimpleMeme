@@ -29,7 +29,7 @@ import cat.ereza.customactivityoncrash.config.CaocConfig;
  *     version: 1.0
  * </pre>
  */
-public class MyApplication extends LitePalApplication{
+public class MyApplication extends LitePalApplication {
 
     private static Context mContext;
 
@@ -53,6 +53,7 @@ public class MyApplication extends LitePalApplication{
                 .setStackOffset(0);// 设置栈偏移，比如二次封装的话就需要设置，默认为 0
         ALog.d(config.toString());
     }
+
     static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
@@ -76,6 +77,7 @@ public class MyApplication extends LitePalApplication{
     public static Context getContext() {
         return mContext;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -85,7 +87,7 @@ public class MyApplication extends LitePalApplication{
     }
 
 
-    private void initErrorHandle(){
+    private void initErrorHandle() {
         CaocConfig.Builder.create()
                 .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
                 .enabled(true) //default: true

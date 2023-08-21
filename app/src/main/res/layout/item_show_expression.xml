@@ -13,28 +13,28 @@
 
         <TextView
             android:id="@+id/expression_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/black"
             android:paddingLeft="24dp"
             android:paddingTop="8dp"
             android:paddingRight="24dp"
             android:paddingBottom="8dp"
-            android:text="标题而已"/>
+            android:text="标题而已"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/expression_image"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:maxWidth="200dp"
             android:maxHeight="300dp"
-            android:layout_gravity="center_horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/loading"/>
+            android:src="@drawable/loading" />
 
         <!--图片的工具菜单栏-->
         <RelativeLayout

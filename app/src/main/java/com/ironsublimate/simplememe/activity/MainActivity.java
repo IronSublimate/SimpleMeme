@@ -125,10 +125,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.main_item)
     CoordinatorLayout mainItem;
-    @BindView(R.id.top_image)
-    CustomImageView topImage;
-    @BindView(R.id.one_text)
-    TextView oneText;
+//    @BindView(R.id.top_image)
+//    CustomImageView topImage;
+//    @BindView(R.id.one_text)
+//    TextView oneText;
     @BindView(R.id.add_exp)
     ImageView addExp;
     @BindView(R.id.fab_search)
@@ -535,8 +535,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private void initListener() {
 
         //监听图片的左右滑动
-        topImage.setLongClickable(true);
-        topImage.setOnTouchListener(new MyGestureListener(this));
+//        topImage.setLongClickable(true);
+//        topImage.setOnTouchListener(new MyGestureListener(this));
 
         fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -563,15 +563,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             }
         });
 
-        oneText.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ClipboardManager clipboardManager = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboardManager.setPrimaryClip(ClipData.newPlainText(null, oneText.getText()));
-                Toasty.success(MainActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+//        oneText.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                ClipboardManager clipboardManager = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+//                clipboardManager.setPrimaryClip(ClipData.newPlainText(null, oneText.getText()));
+//                Toasty.success(MainActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        });
     }
 
 
@@ -668,66 +668,66 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private void setOneUI(final OneDetailList oneDetailLists) {
         final List<OneDetail> oneDetailList = oneDetailLists.getOneDetailList();
         final int currentItem = oneItem % oneDetailList.size();
-        OneDetail oneDetail = oneDetailList.get(currentItem);
-        oneText.setText(oneDetail.getText());
+//        OneDetail oneDetail = oneDetailList.get(currentItem);
+//        oneText.setText(oneDetail.getText());
+//
+//        Glide.with(this).load(oneDetail.getImgUrl())
+//                .into(new SimpleTarget<Drawable>() {
+//                    @Override
+//                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+////                        topImage.setImageDrawable(resource);
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                try {
+////                                    sleep(1500);
+//                                    sleep(0);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        hideRefreshAnimation();
+//                                    }
+//                                });
+//                            }
+//                        }).start();
+//                    }
+//
+//                    @Override
+//                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+//                        Toasty.error(MainActivity.this, "请求图片失败，请稍后重试", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//        oneItem++;//这样下次刷新显示下一条
 
-        Glide.with(this).load(oneDetail.getImgUrl())
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        topImage.setImageDrawable(resource);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-//                                    sleep(1500);
-                                    sleep(0);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        hideRefreshAnimation();
-                                    }
-                                });
-                            }
-                        }).start();
-                    }
-
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                        Toasty.error(MainActivity.this, "请求图片失败，请稍后重试", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        oneItem++;//这样下次刷新显示下一条
-
-        topImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //生成截图
-                final Expression expression = new Expression(3, oneDetailLists.getDate().substring(0, 10) + (currentItem) + ".jpg", oneDetailList.get(currentItem).getImgUrl(), "头图");
-                final ExpImageDialog expImageDialog = new ExpImageDialog.Builder(MainActivity.this)
-                        .setContext(MainActivity.this, null, 3)
-                        .build();
-                expImageDialog.setImageData(expression);
-
-                //判断是否已经生成过了
-                File file = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
-                if (file.exists()) {
-                    expImageDialog.show();
-                } else {
-                    new GenerateScreenshotTask(MainActivity.this, oneText.getText().toString(), expression, new TaskListener() {
-                        @Override
-                        public void onFinish(Object result) {
-                            expImageDialog.show();
-                        }
-                    }).execute();
-                }
-
-            }
-        });
+//        topImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //生成截图
+//                final Expression expression = new Expression(3, oneDetailLists.getDate().substring(0, 10) + (currentItem) + ".jpg", oneDetailList.get(currentItem).getImgUrl(), "头图");
+//                final ExpImageDialog expImageDialog = new ExpImageDialog.Builder(MainActivity.this)
+//                        .setContext(MainActivity.this, null, 3)
+//                        .build();
+//                expImageDialog.setImageData(expression);
+//
+//                //判断是否已经生成过了
+//                File file = new File(GlobalConfig.appDirPath + expression.getFolderName() + "/" + expression.getName());
+//                if (file.exists()) {
+//                    expImageDialog.show();
+//                } else {
+//                    new GenerateScreenshotTask(MainActivity.this, oneText.getText().toString(), expression, new TaskListener() {
+//                        @Override
+//                        public void onFinish(Object result) {
+//                            expImageDialog.show();
+//                        }
+//                    }).execute();
+//                }
+//
+//            }
+//        });
     }
 
     /**

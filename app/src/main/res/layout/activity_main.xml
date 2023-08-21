@@ -35,38 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/white">
-
-                    <com.ironsublimate.simplememe.view.CustomImageView
-                        android:id="@+id/top_image"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="130dp"
-                        android:src="@drawable/header"
-                        android:scaleType="centerCrop"
-                        android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
-
-                        />
-
-
-                    <TextView
-                        android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
-                        android:id="@+id/one_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:paddingBottom="20dp"
-                        android:paddingLeft="50dp"
-                        android:paddingRight="50dp"
-                        android:paddingTop="20dp"
-                        android:text="我心中已经听到来自远方的呼唤，再不需要回过头去关心身后的种种是非。"
-                        android:textColor="#5a5e59" />
-
-                </LinearLayout>
+                    android:background="@color/white"/>
             </LinearLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

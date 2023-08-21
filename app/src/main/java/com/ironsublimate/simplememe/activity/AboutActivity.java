@@ -30,10 +30,10 @@ public class AboutActivity extends AppCompatActivity {
     TextView textView;
     @BindView(R.id.textView2)
     TextView textView2;
-    @BindView(R.id.imageView2)
-    ImageView imageView2;
-    @BindView(R.id.imageView3)
-    ImageView imageView3;
+//    @BindView(R.id.imageView2)
+//    ImageView imageView2;
+//    @BindView(R.id.imageView3)
+//    ImageView imageView3;
     @BindView(R.id.loading_tip)
     TextView loadingTip;
 
